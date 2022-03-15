@@ -5,14 +5,13 @@ namespace ImageStamper.Service
     public class StampSizeService
     {
         public SizeF GetStampSize(
-            Func<Graphics> getGraphicsDelegate,
+            Graphics imgGrphx,
             string text,
             Font font,
             double targetWidth
             )
         {
             int fontSize = 1;
-            Graphics imgGrphx = getGraphicsDelegate.Invoke();
             var size = imgGrphx.MeasureString(text, font);
 
             // keep increasing font until the stamp satisfies target size
