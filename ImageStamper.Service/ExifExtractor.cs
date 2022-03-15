@@ -22,11 +22,10 @@ namespace ImageStamper.Service
 
             int divider = dateString.IndexOf(" ");
 
-            if(divider == -1) return null;
+            if (divider == -1) return null;
 
             string secondHalf = dateString[divider..];
-            string firstHalf = dateString[..10]
-                .Replace(":", "-");
+            string firstHalf = dateString[..10].Replace(":", "-");
 
             return DateTime.TryParse($"{firstHalf}{secondHalf}", out var dateOut) ? dateOut : null;
         }

@@ -10,7 +10,7 @@
             ".bmp"
         };
 
-        public static bool IsValidImageFile(this FileInfo input) => 
+        public static bool IsValidImageFile(this FileInfo input) =>
             _validExtensions.Contains(input.Extension, StringComparer.OrdinalIgnoreCase);
     }
 }

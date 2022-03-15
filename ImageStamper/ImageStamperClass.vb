@@ -1,5 +1,4 @@
 ﻿Imports System.IO
-Imports System.Drawing
 Imports System.Drawing.Imaging
 Imports System.Drawing.Drawing2D
 Imports System.Reflection
