@@ -10,21 +10,21 @@ namespace ImageStamper.Service
             Brush brush,
             Font font,
             string text,
-            Coordinate coordinate
+            Coordinates coordinates
             )
         {
-            imgGrphx.DrawString(text, font, brush, coordinate.X, coordinate.Y);
+            imgGrphx.DrawString(text, font, brush, coordinates.X, coordinates.Y);
             return imgGrphx;
         }
 
         public Graphics DrawBackground(
             Graphics imgGrphx,
-            Coordinate coordinate,
+            Coordinates coordinates,
             float width,
             float height
             )
         {
-            imgGrphx.FillRectangle(Brushes.Black, coordinate.X, coordinate.Y, width, height);
+            imgGrphx.FillRectangle(Brushes.Black, coordinates.X, coordinates.Y, width, height);
             return imgGrphx;
         }
 

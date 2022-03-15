@@ -4,7 +4,7 @@ namespace ImageStamper.Service
 {
     public class BrushService
     {
-        public SolidBrush GetSolidBrush(string colorName) => 
+        public SolidBrush GetSolidBrush(string colorName) =>
             new(GetBrushColor(colorName));
 
         protected Color GetBrushColor(string colorName) =>
@@ -17,7 +17,7 @@ namespace ImageStamper.Service
         }
 
         protected Color GetColorFromHtml(string colorName) =>
-            colorName.Contains("#")
+            colorName.Contains('#')
                 ? ColorTranslator.FromHtml(colorName)
                 : ColorTranslator.FromHtml($"#{colorName}");
     }
