@@ -5,6 +5,7 @@ namespace ImageStamper.Service
 {
     public class Processor
     {
+        // TODO: use ems for padding, rather than pixesls
         private const int _padPixels = 2;
 
         private readonly ImageConverter _imageConverter;

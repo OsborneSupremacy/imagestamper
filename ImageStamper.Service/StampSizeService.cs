@@ -11,7 +11,7 @@ namespace ImageStamper.Service
             double targetWidth
             )
         {
-            int fontSize = 1;
+            int fontSize = 1; // in ems
             var size = imgGrphx.MeasureString(text, font);
 
             // keep increasing font until the stamp satisfies target size
