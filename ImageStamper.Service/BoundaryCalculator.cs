@@ -10,7 +10,7 @@ namespace ImageStamper.Service
             float stampWidth,
             float stampHeight,
             float padPixels
-            ) => 
+            ) =>
             new()
             {
                 Left = padPixels,
