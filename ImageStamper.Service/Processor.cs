@@ -14,8 +14,6 @@ namespace ImageStamper.Service
 
         private readonly BrushService _brushService;
 
-        private readonly FontService _fontService;
-
         private readonly StampSizeService _stampSizeService;
 
         private readonly BoundaryCalculator _boundaryCalculator;
@@ -26,7 +24,6 @@ namespace ImageStamper.Service
             ImageConverter imageConverter,
             DrawingService drawingService,
             BrushService brushService,
-            FontService fontService,
             StampSizeService stampSizeService,
             BoundaryCalculator boundaryCalculator,
             CoordinatesService coordinatesService
@@ -35,7 +32,6 @@ namespace ImageStamper.Service
             _imageConverter = imageConverter ?? throw new ArgumentNullException(nameof(imageConverter));
             _drawingService = drawingService ?? throw new ArgumentNullException(nameof(drawingService));
             _brushService = brushService ?? throw new ArgumentNullException(nameof(brushService));
-            _fontService = fontService ?? throw new ArgumentNullException(nameof(fontService));
             _stampSizeService = stampSizeService ?? throw new ArgumentNullException(nameof(stampSizeService));
             _boundaryCalculator = boundaryCalculator ?? throw new ArgumentNullException(nameof(boundaryCalculator));
             _coordinatesService = coordinatesService ?? throw new ArgumentNullException(nameof(coordinatesService));
@@ -44,7 +40,7 @@ namespace ImageStamper.Service
         public Bitmap Process(
             Bitmap bitMapIn,
             string colorName,
-            string fontFamily,
+            Font font,
             string text,
             PositionConstants position,
             double targetWidth
@@ -55,8 +51,6 @@ namespace ImageStamper.Service
             using var imgGrphx = _imageConverter.BitmapToGraphics(bitMapOut);
 
             var brush = _brushService.GetSolidBrush(colorName);
-
-            var font = _fontService.Get(fontFamily);
 
             var stampSize = _stampSizeService.GetStampSize(imgGrphx, text, font, targetWidth);
 
