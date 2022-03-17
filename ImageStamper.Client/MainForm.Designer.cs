@@ -46,6 +46,10 @@ namespace ImageStamper.Client
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.UseExifCheckBox = new System.Windows.Forms.CheckBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.SizeTrackBar = new System.Windows.Forms.TrackBar();
+            this.SizeTextBox = new System.Windows.Forms.TextBox();
+            ((System.ComponentModel.ISupportInitialize)(this.SizeTrackBar)).BeginInit();
             this.SuspendLayout();
             // 
             // fontDialog1
@@ -179,11 +183,44 @@ namespace ImageStamper.Client
             this.UseExifCheckBox.Text = "Use date/time from EXIF when present";
             this.UseExifCheckBox.UseVisualStyleBackColor = true;
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(572, 224);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(27, 15);
+            this.label5.TabIndex = 14;
+            this.label5.Text = "Size";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // SizeTrackBar
+            // 
+            this.SizeTrackBar.Location = new System.Drawing.Point(605, 253);
+            this.SizeTrackBar.Maximum = 100;
+            this.SizeTrackBar.Minimum = 1;
+            this.SizeTrackBar.Name = "SizeTrackBar";
+            this.SizeTrackBar.Size = new System.Drawing.Size(274, 45);
+            this.SizeTrackBar.TabIndex = 15;
+            this.SizeTrackBar.Value = 20;
+            this.SizeTrackBar.Scroll += new System.EventHandler(this.SizeTrackBar_Scroll);
+            // 
+            // SizeTextBox
+            // 
+            this.SizeTextBox.Location = new System.Drawing.Point(605, 224);
+            this.SizeTextBox.Name = "SizeTextBox";
+            this.SizeTextBox.ReadOnly = true;
+            this.SizeTextBox.Size = new System.Drawing.Size(274, 23);
+            this.SizeTextBox.TabIndex = 16;
+            this.SizeTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(914, 521);
+            this.Controls.Add(this.SizeTextBox);
+            this.Controls.Add(this.SizeTrackBar);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.UseExifCheckBox);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label4);
@@ -200,6 +237,7 @@ namespace ImageStamper.Client
             this.Name = "MainForm";
             this.Text = "Image Stamper";
             this.Load += new System.EventHandler(this.Main_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.SizeTrackBar)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -222,5 +260,8 @@ namespace ImageStamper.Client
         private Label label3;
         private Label label4;
         private CheckBox UseExifCheckBox;
+        private Label label5;
+        private TrackBar SizeTrackBar;
+        private TextBox SizeTextBox;
     }
 }

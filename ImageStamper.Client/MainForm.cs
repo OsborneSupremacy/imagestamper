@@ -22,6 +22,7 @@ namespace ImageStamper.Client
             InitializeComponent();
 
             SetFont(FontTextBox.Font); // doing this so that the displayed name is consistent with the font
+            SetSizeText();
         }
 
         private void Main_Load(object sender, EventArgs e)
@@ -64,5 +65,13 @@ namespace ImageStamper.Client
             ColorTextBox.BackColor = color;
         }
 
+        private void SizeTrackBar_Scroll(object sender, EventArgs e) => 
+            SetSizeText(((TrackBar)sender).Value);
+
+        private void SetSizeText() =>
+            SetSizeText(SizeTrackBar.Value);
+
+        private void SetSizeText(int size) => 
+            SizeTextBox.Text = $"{size}% of image's longest side";
     }
 }
