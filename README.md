@@ -4,7 +4,7 @@ This is project I created for a job I had years ago. It has very limited utility
 
 ## Purpose
 
-The purpose of this program is to simulate burned-in date/timestamps in photos. It is designed for bulk processing, since it's relatively easy to do this manually on a one-off basis.
+The purpose of this program is to simulate burned-in date/timestamps in photos. It is designed for bulk processing, since it's relatively easy to do this manually on a one-off basis using any image editor.
 
 ![Image](Demo.gif "Demonstration")
 
