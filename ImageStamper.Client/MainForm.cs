@@ -16,13 +16,17 @@ namespace ImageStamper.Client
     {
         private readonly Processor _processor;
 
-        private Font _selectedFont = new Font("Arial Narrow", 1);
+        private Font _selectedFont = new("Arial Narrow", 1);
+
+        private Color _selectedColor = Color.Yellow;
 
         public MainForm(Processor processor)
         {
             this._processor = processor ?? throw new ArgumentNullException(nameof(processor));
             InitializeComponent();
-            SetFontName(_selectedFont);
+
+            SetFont(_selectedFont);
+            SetColor(_selectedColor);
         }
 
         private void Main_Load(object sender, EventArgs e)
@@ -36,17 +40,36 @@ namespace ImageStamper.Client
             switch(fontDialog1.ShowDialog())
             {
                 case DialogResult.OK:
-                    SetFontName(fontDialog1.Font);
+                    SetFont(fontDialog1.Font);
                     break;
                 default:
                     return;
             }
         }
 
-        private void SetFontName(Font font)
+        private void SetFont(Font font)
         {
             _selectedFont = font;
             FontTextBox.Text = $"{font.Name} {font.Style}";
         }
+
+        private void SelectColorButton_Click(object sender, EventArgs e)
+        {
+            switch(colorDialog1.ShowDialog())
+            {
+                case DialogResult.OK:
+                    SetColor(colorDialog1.Color);
+                    break;
+                default:
+                    return;
+            }
+        }
+
+        private void SetColor(Color color)
+        {
+            _selectedColor = color;
+            ColorTextBox.Text = color.IsNamedColor ? color.Name : color.ToString();
+        }
+
     }
 }
