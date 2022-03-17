@@ -68,7 +68,7 @@ namespace ImageStamper.Client
         private void SetColor(Color color)
         {
             _selectedColor = color;
-            ColorTextBox.Text = color.IsNamedColor ? color.Name : color.ToString();
+            ColorTextBox.Text = color.Name;
         }
 
     }

@@ -37,11 +37,19 @@ namespace ImageStamper.Client
             this.ColorTextBox = new System.Windows.Forms.TextBox();
             this.SelectColorButton = new System.Windows.Forms.Button();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
+            this.DatePicker = new System.Windows.Forms.DateTimePicker();
+            this.TimePicker = new System.Windows.Forms.DateTimePicker();
             this.SuspendLayout();
+            // 
+            // fontDialog1
+            // 
+            this.fontDialog1.Font = new System.Drawing.Font("Segoe UI", 1F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.fontDialog1.MaxSize = 1;
+            this.fontDialog1.MinSize = 1;
             // 
             // SelectFontButton
             // 
-            this.SelectFontButton.Location = new System.Drawing.Point(766, 207);
+            this.SelectFontButton.Location = new System.Drawing.Point(405, 206);
             this.SelectFontButton.Name = "SelectFontButton";
             this.SelectFontButton.Size = new System.Drawing.Size(75, 23);
             this.SelectFontButton.TabIndex = 0;
@@ -67,7 +75,7 @@ namespace ImageStamper.Client
             // 
             // SelectColorButton
             // 
-            this.SelectColorButton.Location = new System.Drawing.Point(766, 177);
+            this.SelectColorButton.Location = new System.Drawing.Point(405, 177);
             this.SelectColorButton.Name = "SelectColorButton";
             this.SelectColorButton.Size = new System.Drawing.Size(75, 23);
             this.SelectColorButton.TabIndex = 3;
@@ -75,11 +83,32 @@ namespace ImageStamper.Client
             this.SelectColorButton.UseVisualStyleBackColor = true;
             this.SelectColorButton.Click += new System.EventHandler(this.SelectColorButton_Click);
             // 
+            // DatePicker
+            // 
+            this.DatePicker.Location = new System.Drawing.Point(486, 12);
+            this.DatePicker.Name = "DatePicker";
+            this.DatePicker.Size = new System.Drawing.Size(274, 23);
+            this.DatePicker.TabIndex = 4;
+            // 
+            // TimePicker
+            // 
+            this.TimePicker.Checked = false;
+            this.TimePicker.CustomFormat = "hh:mm tt";
+            this.TimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.TimePicker.Location = new System.Drawing.Point(486, 41);
+            this.TimePicker.Name = "TimePicker";
+            this.TimePicker.ShowCheckBox = true;
+            this.TimePicker.ShowUpDown = true;
+            this.TimePicker.Size = new System.Drawing.Size(274, 23);
+            this.TimePicker.TabIndex = 5;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(914, 521);
+            this.Controls.Add(this.TimePicker);
+            this.Controls.Add(this.DatePicker);
             this.Controls.Add(this.SelectColorButton);
             this.Controls.Add(this.ColorTextBox);
             this.Controls.Add(this.FontTextBox);
@@ -100,5 +129,7 @@ namespace ImageStamper.Client
         private TextBox ColorTextBox;
         private Button SelectColorButton;
         private ColorDialog colorDialog1;
+        private DateTimePicker DatePicker;
+        private DateTimePicker TimePicker;
     }
 }
