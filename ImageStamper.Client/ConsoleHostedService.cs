@@ -18,7 +18,7 @@ namespace ImageStamper.Client
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            _applicationLifetime.ApplicationStarted.Register(async () =>
+            _applicationLifetime.ApplicationStarted.Register(() =>
             {
                 try
                 {

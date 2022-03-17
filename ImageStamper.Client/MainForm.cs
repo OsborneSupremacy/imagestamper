@@ -7,13 +7,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ImageStamper.Service;
+
 
 namespace ImageStamper.Client
 {
     public partial class MainForm : Form
     {
-        public MainForm()
+        private readonly Processor _processor;
+
+        public MainForm(Processor processor)
         {
+            this._processor = processor ?? throw new ArgumentNullException(nameof(processor));
             InitializeComponent();
         }
 

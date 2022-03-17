@@ -1,4 +1,7 @@
-﻿namespace ImageStamper.Client
+﻿using ImageStamper.Service;
+using System.ComponentModel;
+
+namespace ImageStamper.Client
 {
     partial class MainForm
     {
