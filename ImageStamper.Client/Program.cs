@@ -2,6 +2,8 @@ using ImageStamper.Service;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Reflection;
+using System.Linq;
 
 namespace ImageStamper.Client
 {
@@ -19,18 +21,16 @@ namespace ImageStamper.Client
                 {
                     services.AddHostedService<ConsoleHostedService>();
 
-                    services.AddSingleton<BoundaryCalculator>();
-                    services.AddSingleton<BrushService>();
-                    services.AddSingleton<CoordinatesService>();
-                    services.AddSingleton<DrawingService>();
-                    services.AddSingleton<ExifExtractor>();
-                    services.AddSingleton<FontService>();
-                    services.AddSingleton<Service.ImageConverter>();
-                    services.AddSingleton<StampSizeService>();
-                    services.AddSingleton<Processor>();
+                    Assembly.GetAssembly(typeof(Processor))!
+                        .GetTypes()
+                        .Where(x => !x.IsAbstract)
+                        .Where(x => x.IsPublic)
+                        .ToList()
+                        .ForEach(x => {
+                            services.AddSingleton(x);
+                        });
 
                     services.AddSingleton<MainForm>();
-                    ///services.RegisterServices();
                 })
                 .RunConsoleAsync();
         }
