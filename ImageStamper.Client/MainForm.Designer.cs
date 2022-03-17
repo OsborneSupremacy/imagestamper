@@ -49,7 +49,20 @@ namespace ImageStamper.Client
             this.label5 = new System.Windows.Forms.Label();
             this.SizeTrackBar = new System.Windows.Forms.TrackBar();
             this.SizeTextBox = new System.Windows.Forms.TextBox();
+            this.PositionGroupBox = new System.Windows.Forms.GroupBox();
+            this.YCenterRightButton = new System.Windows.Forms.RadioButton();
+            this.BottomXCenterButton = new System.Windows.Forms.RadioButton();
+            this.TopLeftButton = new System.Windows.Forms.RadioButton();
+            this.BottomLeftButton = new System.Windows.Forms.RadioButton();
+            this.TopXCenterButton = new System.Windows.Forms.RadioButton();
+            this.BottomRightButton = new System.Windows.Forms.RadioButton();
+            this.YCenterXCenterButton = new System.Windows.Forms.RadioButton();
+            this.TopRight = new System.Windows.Forms.RadioButton();
+            this.YCenterLeftButton = new System.Windows.Forms.RadioButton();
+            this.label6 = new System.Windows.Forms.Label();
+            this.BackgroundFillCheckBox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.SizeTrackBar)).BeginInit();
+            this.PositionGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // fontDialog1
@@ -201,6 +214,7 @@ namespace ImageStamper.Client
             this.SizeTrackBar.Name = "SizeTrackBar";
             this.SizeTrackBar.Size = new System.Drawing.Size(274, 45);
             this.SizeTrackBar.TabIndex = 15;
+            this.SizeTrackBar.TickStyle = System.Windows.Forms.TickStyle.None;
             this.SizeTrackBar.Value = 20;
             this.SizeTrackBar.Scroll += new System.EventHandler(this.SizeTrackBar_Scroll);
             // 
@@ -213,11 +227,151 @@ namespace ImageStamper.Client
             this.SizeTextBox.TabIndex = 16;
             this.SizeTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
+            // PositionGroupBox
+            // 
+            this.PositionGroupBox.Controls.Add(this.YCenterRightButton);
+            this.PositionGroupBox.Controls.Add(this.BottomXCenterButton);
+            this.PositionGroupBox.Controls.Add(this.TopLeftButton);
+            this.PositionGroupBox.Controls.Add(this.BottomLeftButton);
+            this.PositionGroupBox.Controls.Add(this.TopXCenterButton);
+            this.PositionGroupBox.Controls.Add(this.BottomRightButton);
+            this.PositionGroupBox.Controls.Add(this.YCenterXCenterButton);
+            this.PositionGroupBox.Controls.Add(this.TopRight);
+            this.PositionGroupBox.Controls.Add(this.YCenterLeftButton);
+            this.PositionGroupBox.Location = new System.Drawing.Point(605, 284);
+            this.PositionGroupBox.Name = "PositionGroupBox";
+            this.PositionGroupBox.Size = new System.Drawing.Size(274, 112);
+            this.PositionGroupBox.TabIndex = 18;
+            this.PositionGroupBox.TabStop = false;
+            // 
+            // YCenterRightButton
+            // 
+            this.YCenterRightButton.Appearance = System.Windows.Forms.Appearance.Button;
+            this.YCenterRightButton.Location = new System.Drawing.Point(183, 47);
+            this.YCenterRightButton.Name = "YCenterRightButton";
+            this.YCenterRightButton.Size = new System.Drawing.Size(80, 25);
+            this.YCenterRightButton.TabIndex = 28;
+            this.YCenterRightButton.Text = "                     ";
+            this.YCenterRightButton.UseVisualStyleBackColor = true;
+            this.YCenterRightButton.CheckedChanged += new System.EventHandler(this.PositionButton_Click);
+            // 
+            // BottomXCenterButton
+            // 
+            this.BottomXCenterButton.Appearance = System.Windows.Forms.Appearance.Button;
+            this.BottomXCenterButton.Location = new System.Drawing.Point(97, 78);
+            this.BottomXCenterButton.Name = "BottomXCenterButton";
+            this.BottomXCenterButton.Size = new System.Drawing.Size(80, 25);
+            this.BottomXCenterButton.TabIndex = 27;
+            this.BottomXCenterButton.Text = "                     ";
+            this.BottomXCenterButton.UseVisualStyleBackColor = true;
+            this.BottomXCenterButton.CheckedChanged += new System.EventHandler(this.PositionButton_Click);
+            // 
+            // TopLeftButton
+            // 
+            this.TopLeftButton.Appearance = System.Windows.Forms.Appearance.Button;
+            this.TopLeftButton.Location = new System.Drawing.Point(11, 16);
+            this.TopLeftButton.Name = "TopLeftButton";
+            this.TopLeftButton.Size = new System.Drawing.Size(80, 25);
+            this.TopLeftButton.TabIndex = 20;
+            this.TopLeftButton.Text = "                     ";
+            this.TopLeftButton.UseVisualStyleBackColor = true;
+            this.TopLeftButton.CheckedChanged += new System.EventHandler(this.PositionButton_Click);
+            // 
+            // BottomLeftButton
+            // 
+            this.BottomLeftButton.Appearance = System.Windows.Forms.Appearance.Button;
+            this.BottomLeftButton.Location = new System.Drawing.Point(11, 78);
+            this.BottomLeftButton.Name = "BottomLeftButton";
+            this.BottomLeftButton.Size = new System.Drawing.Size(80, 25);
+            this.BottomLeftButton.TabIndex = 26;
+            this.BottomLeftButton.Text = "                     ";
+            this.BottomLeftButton.UseVisualStyleBackColor = true;
+            this.BottomLeftButton.CheckedChanged += new System.EventHandler(this.PositionButton_Click);
+            // 
+            // TopXCenterButton
+            // 
+            this.TopXCenterButton.Appearance = System.Windows.Forms.Appearance.Button;
+            this.TopXCenterButton.Location = new System.Drawing.Point(97, 16);
+            this.TopXCenterButton.Name = "TopXCenterButton";
+            this.TopXCenterButton.Size = new System.Drawing.Size(80, 25);
+            this.TopXCenterButton.TabIndex = 21;
+            this.TopXCenterButton.Text = "                     ";
+            this.TopXCenterButton.UseVisualStyleBackColor = true;
+            this.TopXCenterButton.CheckedChanged += new System.EventHandler(this.PositionButton_Click);
+            // 
+            // BottomRightButton
+            // 
+            this.BottomRightButton.Appearance = System.Windows.Forms.Appearance.Button;
+            this.BottomRightButton.Checked = true;
+            this.BottomRightButton.Location = new System.Drawing.Point(184, 78);
+            this.BottomRightButton.Name = "BottomRightButton";
+            this.BottomRightButton.Size = new System.Drawing.Size(80, 25);
+            this.BottomRightButton.TabIndex = 24;
+            this.BottomRightButton.TabStop = true;
+            this.BottomRightButton.Text = "                     ";
+            this.BottomRightButton.UseVisualStyleBackColor = true;
+            // 
+            // YCenterXCenterButton
+            // 
+            this.YCenterXCenterButton.Appearance = System.Windows.Forms.Appearance.Button;
+            this.YCenterXCenterButton.Location = new System.Drawing.Point(97, 47);
+            this.YCenterXCenterButton.Name = "YCenterXCenterButton";
+            this.YCenterXCenterButton.Size = new System.Drawing.Size(80, 25);
+            this.YCenterXCenterButton.TabIndex = 25;
+            this.YCenterXCenterButton.Text = "                     ";
+            this.YCenterXCenterButton.UseVisualStyleBackColor = true;
+            this.YCenterXCenterButton.CheckedChanged += new System.EventHandler(this.PositionButton_Click);
+            // 
+            // TopRight
+            // 
+            this.TopRight.Appearance = System.Windows.Forms.Appearance.Button;
+            this.TopRight.Location = new System.Drawing.Point(183, 16);
+            this.TopRight.Name = "TopRight";
+            this.TopRight.Size = new System.Drawing.Size(80, 25);
+            this.TopRight.TabIndex = 22;
+            this.TopRight.Text = "                     ";
+            this.TopRight.UseVisualStyleBackColor = true;
+            this.TopRight.CheckedChanged += new System.EventHandler(this.PositionButton_Click);
+            // 
+            // YCenterLeftButton
+            // 
+            this.YCenterLeftButton.Appearance = System.Windows.Forms.Appearance.Button;
+            this.YCenterLeftButton.Location = new System.Drawing.Point(11, 47);
+            this.YCenterLeftButton.Name = "YCenterLeftButton";
+            this.YCenterLeftButton.Size = new System.Drawing.Size(80, 25);
+            this.YCenterLeftButton.TabIndex = 23;
+            this.YCenterLeftButton.Text = "                     ";
+            this.YCenterLeftButton.UseVisualStyleBackColor = true;
+            this.YCenterLeftButton.CheckedChanged += new System.EventHandler(this.PositionButton_Click);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(549, 297);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(50, 15);
+            this.label6.TabIndex = 19;
+            this.label6.Text = "Position";
+            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // BackgroundFillCheckBox
+            // 
+            this.BackgroundFillCheckBox.AutoSize = true;
+            this.BackgroundFillCheckBox.Location = new System.Drawing.Point(605, 402);
+            this.BackgroundFillCheckBox.Name = "BackgroundFillCheckBox";
+            this.BackgroundFillCheckBox.Size = new System.Drawing.Size(108, 19);
+            this.BackgroundFillCheckBox.TabIndex = 20;
+            this.BackgroundFillCheckBox.Text = "Background Fill";
+            this.BackgroundFillCheckBox.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(914, 521);
+            this.Controls.Add(this.BackgroundFillCheckBox);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.PositionGroupBox);
             this.Controls.Add(this.SizeTextBox);
             this.Controls.Add(this.SizeTrackBar);
             this.Controls.Add(this.label5);
@@ -238,6 +392,7 @@ namespace ImageStamper.Client
             this.Text = "Image Stamper";
             this.Load += new System.EventHandler(this.Main_Load);
             ((System.ComponentModel.ISupportInitialize)(this.SizeTrackBar)).EndInit();
+            this.PositionGroupBox.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -263,5 +418,17 @@ namespace ImageStamper.Client
         private Label label5;
         private TrackBar SizeTrackBar;
         private TextBox SizeTextBox;
+        private GroupBox PositionGroupBox;
+        private Label label6;
+        private RadioButton TopLeftButton;
+        private RadioButton YCenterRightButton;
+        private RadioButton BottomXCenterButton;
+        private RadioButton BottomLeftButton;
+        private RadioButton TopXCenterButton;
+        private RadioButton BottomRightButton;
+        private RadioButton YCenterXCenterButton;
+        private RadioButton TopRight;
+        private RadioButton YCenterLeftButton;
+        private CheckBox BackgroundFillCheckBox;
     }
 }

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ImageStamper.Objects;
 using ImageStamper.Service;
 
 
@@ -15,6 +16,8 @@ namespace ImageStamper.Client
     public partial class MainForm : Form
     {
         private readonly Processor _processor;
+
+        private PositionConstants _position = PositionConstants.BottomRight;
 
         public MainForm(Processor processor)
         {
@@ -60,10 +63,8 @@ namespace ImageStamper.Client
             }
         }
 
-        private void SetColor(Color color)
-        {
+        private void SetColor(Color color) => 
             ColorTextBox.BackColor = color;
-        }
 
         private void SizeTrackBar_Scroll(object sender, EventArgs e) => 
             SetSizeText(((TrackBar)sender).Value);
@@ -73,5 +74,17 @@ namespace ImageStamper.Client
 
         private void SetSizeText(int size) => 
             SizeTextBox.Text = $"{size}% of image's longest side";
+
+        private void PositionButton_Click(object sender, EventArgs e)
+        {
+            var button = (RadioButton)sender;
+            if (!button.Checked) return;
+
+            // button name contains word "Button". Remove it to get text corresponding
+            // to PositionConstants values.
+            var positionName = button.Name.Replace(nameof(Button), string.Empty);
+
+            _position = (PositionConstants)Enum.Parse(typeof(PositionConstants), positionName, true);
+        }
     }
 }
