@@ -39,17 +39,24 @@ namespace ImageStamper.Client
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.DatePicker = new System.Windows.Forms.DateTimePicker();
             this.TimePicker = new System.Windows.Forms.DateTimePicker();
+            this.DateFormatTextBox = new System.Windows.Forms.TextBox();
+            this.TimeFormatTextBox = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.UseExifCheckBox = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // fontDialog1
             // 
-            this.fontDialog1.Font = new System.Drawing.Font("Segoe UI", 1F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.fontDialog1.MaxSize = 1;
-            this.fontDialog1.MinSize = 1;
+            this.fontDialog1.FontMustExist = true;
+            this.fontDialog1.MaxSize = 9;
+            this.fontDialog1.MinSize = 9;
             // 
             // SelectFontButton
             // 
-            this.SelectFontButton.Location = new System.Drawing.Point(405, 206);
+            this.SelectFontButton.Location = new System.Drawing.Point(524, 196);
             this.SelectFontButton.Name = "SelectFontButton";
             this.SelectFontButton.Size = new System.Drawing.Size(75, 23);
             this.SelectFontButton.TabIndex = 0;
@@ -59,15 +66,17 @@ namespace ImageStamper.Client
             // 
             // FontTextBox
             // 
-            this.FontTextBox.Location = new System.Drawing.Point(486, 207);
+            this.FontTextBox.Font = new System.Drawing.Font("Arial Narrow", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.FontTextBox.Location = new System.Drawing.Point(605, 197);
             this.FontTextBox.Name = "FontTextBox";
             this.FontTextBox.ReadOnly = true;
-            this.FontTextBox.Size = new System.Drawing.Size(274, 23);
+            this.FontTextBox.Size = new System.Drawing.Size(274, 21);
             this.FontTextBox.TabIndex = 1;
             // 
             // ColorTextBox
             // 
-            this.ColorTextBox.Location = new System.Drawing.Point(486, 178);
+            this.ColorTextBox.BackColor = System.Drawing.Color.Yellow;
+            this.ColorTextBox.Location = new System.Drawing.Point(605, 168);
             this.ColorTextBox.Name = "ColorTextBox";
             this.ColorTextBox.ReadOnly = true;
             this.ColorTextBox.Size = new System.Drawing.Size(274, 23);
@@ -75,7 +84,7 @@ namespace ImageStamper.Client
             // 
             // SelectColorButton
             // 
-            this.SelectColorButton.Location = new System.Drawing.Point(405, 177);
+            this.SelectColorButton.Location = new System.Drawing.Point(524, 167);
             this.SelectColorButton.Name = "SelectColorButton";
             this.SelectColorButton.Size = new System.Drawing.Size(75, 23);
             this.SelectColorButton.TabIndex = 3;
@@ -85,7 +94,7 @@ namespace ImageStamper.Client
             // 
             // DatePicker
             // 
-            this.DatePicker.Location = new System.Drawing.Point(486, 12);
+            this.DatePicker.Location = new System.Drawing.Point(605, 52);
             this.DatePicker.Name = "DatePicker";
             this.DatePicker.Size = new System.Drawing.Size(274, 23);
             this.DatePicker.TabIndex = 4;
@@ -95,18 +104,93 @@ namespace ImageStamper.Client
             this.TimePicker.Checked = false;
             this.TimePicker.CustomFormat = "hh:mm tt";
             this.TimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.TimePicker.Location = new System.Drawing.Point(486, 41);
+            this.TimePicker.Location = new System.Drawing.Point(605, 110);
             this.TimePicker.Name = "TimePicker";
             this.TimePicker.ShowCheckBox = true;
             this.TimePicker.ShowUpDown = true;
             this.TimePicker.Size = new System.Drawing.Size(274, 23);
             this.TimePicker.TabIndex = 5;
             // 
+            // DateFormatTextBox
+            // 
+            this.DateFormatTextBox.Location = new System.Drawing.Point(605, 81);
+            this.DateFormatTextBox.Name = "DateFormatTextBox";
+            this.DateFormatTextBox.Size = new System.Drawing.Size(274, 23);
+            this.DateFormatTextBox.TabIndex = 6;
+            this.DateFormatTextBox.Text = "MM/dd/yyyy";
+            // 
+            // TimeFormatTextBox
+            // 
+            this.TimeFormatTextBox.Location = new System.Drawing.Point(605, 139);
+            this.TimeFormatTextBox.Name = "TimeFormatTextBox";
+            this.TimeFormatTextBox.Size = new System.Drawing.Size(274, 23);
+            this.TimeFormatTextBox.TabIndex = 7;
+            this.TimeFormatTextBox.Text = "hh:mm tt";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(568, 52);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(31, 15);
+            this.label1.TabIndex = 8;
+            this.label1.Text = "Date";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(527, 84);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(72, 15);
+            this.label2.TabIndex = 9;
+            this.label2.Text = "Date Format";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(527, 142);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(74, 15);
+            this.label3.TabIndex = 11;
+            this.label3.Text = "Time Format";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(568, 110);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(33, 15);
+            this.label4.TabIndex = 10;
+            this.label4.Text = "Time";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // UseExifCheckBox
+            // 
+            this.UseExifCheckBox.AutoSize = true;
+            this.UseExifCheckBox.Checked = true;
+            this.UseExifCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.UseExifCheckBox.Location = new System.Drawing.Point(605, 27);
+            this.UseExifCheckBox.Name = "UseExifCheckBox";
+            this.UseExifCheckBox.Size = new System.Drawing.Size(228, 19);
+            this.UseExifCheckBox.TabIndex = 12;
+            this.UseExifCheckBox.Text = "Use date/time from EXIF when present";
+            this.UseExifCheckBox.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(914, 521);
+            this.Controls.Add(this.UseExifCheckBox);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.TimeFormatTextBox);
+            this.Controls.Add(this.DateFormatTextBox);
             this.Controls.Add(this.TimePicker);
             this.Controls.Add(this.DatePicker);
             this.Controls.Add(this.SelectColorButton);
@@ -131,5 +215,12 @@ namespace ImageStamper.Client
         private ColorDialog colorDialog1;
         private DateTimePicker DatePicker;
         private DateTimePicker TimePicker;
+        private TextBox DateFormatTextBox;
+        private TextBox TimeFormatTextBox;
+        private Label label1;
+        private Label label2;
+        private Label label3;
+        private Label label4;
+        private CheckBox UseExifCheckBox;
     }
 }
