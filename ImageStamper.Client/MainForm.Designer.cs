@@ -73,7 +73,7 @@ namespace ImageStamper.Client
             // 
             // SelectFontButton
             // 
-            this.SelectFontButton.Location = new System.Drawing.Point(524, 196);
+            this.SelectFontButton.Location = new System.Drawing.Point(524, 221);
             this.SelectFontButton.Name = "SelectFontButton";
             this.SelectFontButton.Size = new System.Drawing.Size(75, 23);
             this.SelectFontButton.TabIndex = 0;
@@ -84,7 +84,7 @@ namespace ImageStamper.Client
             // FontTextBox
             // 
             this.FontTextBox.Font = new System.Drawing.Font("Arial Narrow", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.FontTextBox.Location = new System.Drawing.Point(605, 197);
+            this.FontTextBox.Location = new System.Drawing.Point(605, 222);
             this.FontTextBox.Name = "FontTextBox";
             this.FontTextBox.ReadOnly = true;
             this.FontTextBox.Size = new System.Drawing.Size(274, 21);
@@ -199,7 +199,7 @@ namespace ImageStamper.Client
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(572, 224);
+            this.label5.Location = new System.Drawing.Point(572, 249);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(27, 15);
             this.label5.TabIndex = 14;
@@ -208,7 +208,7 @@ namespace ImageStamper.Client
             // 
             // SizeTrackBar
             // 
-            this.SizeTrackBar.Location = new System.Drawing.Point(605, 253);
+            this.SizeTrackBar.Location = new System.Drawing.Point(605, 278);
             this.SizeTrackBar.Maximum = 100;
             this.SizeTrackBar.Minimum = 1;
             this.SizeTrackBar.Name = "SizeTrackBar";
@@ -220,7 +220,7 @@ namespace ImageStamper.Client
             // 
             // SizeTextBox
             // 
-            this.SizeTextBox.Location = new System.Drawing.Point(605, 224);
+            this.SizeTextBox.Location = new System.Drawing.Point(605, 249);
             this.SizeTextBox.Name = "SizeTextBox";
             this.SizeTextBox.ReadOnly = true;
             this.SizeTextBox.Size = new System.Drawing.Size(274, 23);
@@ -238,7 +238,7 @@ namespace ImageStamper.Client
             this.PositionGroupBox.Controls.Add(this.YCenterXCenterButton);
             this.PositionGroupBox.Controls.Add(this.TopRight);
             this.PositionGroupBox.Controls.Add(this.YCenterLeftButton);
-            this.PositionGroupBox.Location = new System.Drawing.Point(605, 284);
+            this.PositionGroupBox.Location = new System.Drawing.Point(605, 315);
             this.PositionGroupBox.Name = "PositionGroupBox";
             this.PositionGroupBox.Size = new System.Drawing.Size(274, 112);
             this.PositionGroupBox.TabIndex = 18;
@@ -347,7 +347,7 @@ namespace ImageStamper.Client
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(549, 297);
+            this.label6.Location = new System.Drawing.Point(549, 315);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(50, 15);
             this.label6.TabIndex = 19;
@@ -357,7 +357,7 @@ namespace ImageStamper.Client
             // BackgroundFillCheckBox
             // 
             this.BackgroundFillCheckBox.AutoSize = true;
-            this.BackgroundFillCheckBox.Location = new System.Drawing.Point(605, 402);
+            this.BackgroundFillCheckBox.Location = new System.Drawing.Point(605, 197);
             this.BackgroundFillCheckBox.Name = "BackgroundFillCheckBox";
             this.BackgroundFillCheckBox.Size = new System.Drawing.Size(108, 19);
             this.BackgroundFillCheckBox.TabIndex = 20;
