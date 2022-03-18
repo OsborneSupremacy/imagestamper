@@ -1,15 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using ImageStamper.Objects;
+﻿using ImageStamper.Objects;
 using ImageStamper.Service;
-
 
 namespace ImageStamper.Client
 {
@@ -17,11 +7,18 @@ namespace ImageStamper.Client
     {
         private readonly Processor _processor;
 
+        private readonly StampTextComposer _stampTextComposer;
+
         private PositionConstants _position = PositionConstants.BottomRight;
 
-        public MainForm(Processor processor)
+        public MainForm(
+            Processor processor,
+            StampTextComposer stampTextComposer
+            )
         {
             this._processor = processor ?? throw new ArgumentNullException(nameof(processor));
+            this._stampTextComposer = stampTextComposer ?? throw new ArgumentNullException(nameof(stampTextComposer));
+
             InitializeComponent();
 
             SetFont(FontTextBox.Font); // doing this so that the displayed name is consistent with the font
@@ -96,25 +93,18 @@ namespace ImageStamper.Client
         private void RefreshPreview()
         {
             Bitmap preview = _processor
-                .Process
-                (
+                .Process(
                     Properties.Resources.IMG_3192,
                     ColorTextBox.BackColor,
+                    BackgroundFillCheckBox.Checked,
                     FontTextBox.Font,
-                    GetStampText(),
+                    _stampTextComposer.Compose(DatePicker.Value, DateFormatTextBox.Text, TimePicker.Checked, TimePicker.Value, TimeFormatTextBox.Text),
                     PositionConstants.YCenterXCenter,
-                    75
+                    50
                 );
 
             PreviewPictureBackGroundBox.Image = preview;
             PreviewPictureBackGroundBox.Refresh();
-        }
-
-        private string GetStampText()
-        {
-            if(TimePicker.Checked && !string.IsNullOrWhiteSpace(TimeFormatTextBox.Text))
-                return $"{DatePicker.Value.ToString(DateFormatTextBox.Text)} {TimePicker.Value.ToString(TimeFormatTextBox.Text)}";
-            return $"{DatePicker.Value.ToString(DateFormatTextBox.Text)}";
         }
     }
 }

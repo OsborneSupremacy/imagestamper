@@ -36,6 +36,7 @@ namespace ImageStamper.Service
         public Bitmap Process(
             Bitmap bitmap,
             Color color,
+            bool backGroundFill,
             Font fontIn,
             string text,
             PositionConstants position,
@@ -52,9 +53,10 @@ namespace ImageStamper.Service
             var boundaries = _boundaryCalculator.Calculate(imageSize, stampSize, _padPixels);
             var coordinates = _coordinatesService.Get(position, boundaries);
 
-            _drawingService.DrawStamp(imgGrphx, brush, stampFont, text, coordinates);
+            if (backGroundFill)
+                _drawingService.DrawBackground(imgGrphx, coordinates, stampSize);
 
-            //_drawingService.DrawBackground(imgGrphx, new Coordinates(20, 20), 100, 1000);
+            _drawingService.DrawStamp(imgGrphx, brush, stampFont, text, coordinates);
 
             return bitmap;
         }

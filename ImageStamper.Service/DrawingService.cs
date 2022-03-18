@@ -20,11 +20,10 @@ namespace ImageStamper.Service
         public Graphics DrawBackground(
             Graphics imgGrphx,
             Coordinates coordinates,
-            float width,
-            float height
+            SizeF size
             )
         {
-            imgGrphx.FillRectangle(Brushes.Black, coordinates.X, coordinates.Y, width, height);
+            imgGrphx.FillRectangle(Brushes.Black, coordinates.X, coordinates.Y, size.Width, size.Height);
             return imgGrphx;
         }
 
