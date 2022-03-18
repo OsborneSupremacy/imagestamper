@@ -1,24 +1,23 @@
 ﻿using ImageStamper.Objects;
+using System.Drawing;
 
 namespace ImageStamper.Service
 {
     public class BoundaryCalculator
     {
         public Boundaries Calculate(
-            float imageWidth,
-            float imageHeight,
-            float stampWidth,
-            float stampHeight,
+            SizeF imageSize,
+            SizeF stampSize,
             float padPixels
             ) =>
             new()
             {
                 Left = padPixels,
-                XCenter = (imageWidth / 2) - (stampWidth / 2),
-                Right = imageWidth - (stampWidth + padPixels),
+                XCenter = (imageSize.Width / 2) - (stampSize.Width / 2),
+                Right = imageSize.Width - (stampSize.Width + padPixels),
                 Top = padPixels,
-                YCenter = (imageHeight / 2) - (stampHeight / 2),
-                Bottom = imageHeight - (stampHeight + padPixels)
+                YCenter = (imageSize.Height / 2) - (stampSize.Height / 2),
+                Bottom = imageSize.Height - (stampSize.Height + padPixels)
             };
     }
 }

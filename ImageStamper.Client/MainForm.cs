@@ -26,11 +26,12 @@ namespace ImageStamper.Client
 
             SetFont(FontTextBox.Font); // doing this so that the displayed name is consistent with the font
             SetSizeText();
+
+            RefreshPreview();
         }
 
         private void Main_Load(object sender, EventArgs e)
         {
-
         }
 
         private void SelectFontButton_Click(object sender, EventArgs e)
@@ -43,6 +44,7 @@ namespace ImageStamper.Client
                 default:
                     return;
             }
+            RefreshPreview();
         }
 
         private void SetFont(Font font)
@@ -61,6 +63,7 @@ namespace ImageStamper.Client
                 default:
                     return;
             }
+            RefreshPreview();
         }
 
         private void SetColor(Color color) => 
@@ -85,6 +88,33 @@ namespace ImageStamper.Client
             var positionName = button.Name.Replace(nameof(Button), string.Empty);
 
             _position = (PositionConstants)Enum.Parse(typeof(PositionConstants), positionName, true);
+        }
+
+        private void RefreshPreviewButton_Click(object sender, EventArgs e) => 
+            RefreshPreview();
+
+        private void RefreshPreview()
+        {
+            Bitmap preview = _processor
+                .Process
+                (
+                    Properties.Resources.IMG_3192,
+                    ColorTextBox.BackColor,
+                    FontTextBox.Font,
+                    GetStampText(),
+                    PositionConstants.YCenterXCenter,
+                    75
+                );
+
+            PreviewPictureBackGroundBox.Image = preview;
+            PreviewPictureBackGroundBox.Refresh();
+        }
+
+        private string GetStampText()
+        {
+            if(TimePicker.Checked && !string.IsNullOrWhiteSpace(TimeFormatTextBox.Text))
+                return $"{DatePicker.Value.ToString(DateFormatTextBox.Text)} {TimePicker.Value.ToString(TimeFormatTextBox.Text)}";
+            return $"{DatePicker.Value.ToString(DateFormatTextBox.Text)}";
         }
     }
 }

@@ -62,7 +62,7 @@ namespace ImageStamper.Client
             this.label6 = new System.Windows.Forms.Label();
             this.BackgroundFillCheckBox = new System.Windows.Forms.CheckBox();
             this.PreviewPictureBackGroundBox = new System.Windows.Forms.PictureBox();
-            this.label7 = new System.Windows.Forms.Label();
+            this.RefreshPreviewButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.SizeTrackBar)).BeginInit();
             this.PositionGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PreviewPictureBackGroundBox)).BeginInit();
@@ -313,6 +313,7 @@ namespace ImageStamper.Client
             this.BottomRightButton.TabStop = true;
             this.BottomRightButton.Text = "                     ";
             this.BottomRightButton.UseVisualStyleBackColor = true;
+            this.BottomRightButton.CheckedChanged += new System.EventHandler(this.PositionButton_Click);
             // 
             // YCenterXCenterButton
             // 
@@ -371,28 +372,30 @@ namespace ImageStamper.Client
             // 
             this.PreviewPictureBackGroundBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.PreviewPictureBackGroundBox.Image = global::ImageStamper.Client.Properties.Resources.IMG_3192;
-            this.PreviewPictureBackGroundBox.Location = new System.Drawing.Point(494, 474);
+            this.PreviewPictureBackGroundBox.Location = new System.Drawing.Point(494, 445);
             this.PreviewPictureBackGroundBox.Name = "PreviewPictureBackGroundBox";
             this.PreviewPictureBackGroundBox.Size = new System.Drawing.Size(385, 69);
             this.PreviewPictureBackGroundBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.PreviewPictureBackGroundBox.TabIndex = 21;
             this.PreviewPictureBackGroundBox.TabStop = false;
             // 
-            // label7
+            // RefreshPreviewButton
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(494, 456);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(113, 15);
-            this.label7.TabIndex = 22;
-            this.label7.Text = "Stamp Style Preview";
+            this.RefreshPreviewButton.Location = new System.Drawing.Point(494, 520);
+            this.RefreshPreviewButton.Name = "RefreshPreviewButton";
+            this.RefreshPreviewButton.Size = new System.Drawing.Size(385, 23);
+            this.RefreshPreviewButton.TabIndex = 23;
+            this.RefreshPreviewButton.Text = "Refresh Stamp Style Preview";
+            this.RefreshPreviewButton.UseVisualStyleBackColor = true;
+            this.RefreshPreviewButton.Click += new System.EventHandler(this.RefreshPreviewButton_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(914, 555);
+            this.ClientSize = new System.Drawing.Size(891, 555);
+            this.Controls.Add(this.RefreshPreviewButton);
             this.Controls.Add(this.PreviewPictureBackGroundBox);
             this.Controls.Add(this.BackgroundFillCheckBox);
             this.Controls.Add(this.label6);
@@ -413,11 +416,9 @@ namespace ImageStamper.Client
             this.Controls.Add(this.ColorTextBox);
             this.Controls.Add(this.FontTextBox);
             this.Controls.Add(this.SelectFontButton);
-            this.Controls.Add(this.label7);
             this.Name = "MainForm";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "Image Stamper";
-            this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
             this.Load += new System.EventHandler(this.Main_Load);
             ((System.ComponentModel.ISupportInitialize)(this.SizeTrackBar)).EndInit();
             this.PositionGroupBox.ResumeLayout(false);
@@ -460,6 +461,6 @@ namespace ImageStamper.Client
         private RadioButton YCenterLeftButton;
         private CheckBox BackgroundFillCheckBox;
         private PictureBox PreviewPictureBackGroundBox;
-        private Label label7;
+        private Button RefreshPreviewButton;
     }
 }

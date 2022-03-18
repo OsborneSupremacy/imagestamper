@@ -34,29 +34,29 @@ namespace ImageStamper.Service
         }
 
         public Bitmap Process(
-            Bitmap bitMapIn,
+            Bitmap bitmap,
             Color color,
-            Font font,
+            Font fontIn,
             string text,
             PositionConstants position,
-            double targetWidth
+            int percentOfImage
             )
         {
-            var bitMapOut = (Bitmap)bitMapIn.Clone();
+            using var imgGrphx = _imageConverter.BitmapToGraphics(bitmap);
 
-            using var imgGrphx = _imageConverter.BitmapToGraphics(bitMapOut);
+            var imageSize = new SizeF(bitmap.Width, bitmap.Height);
 
             SolidBrush brush = new(color);
 
-            var stampSize = _stampSizeService.GetStampSize(imgGrphx, text, font, targetWidth);
-
-            var boundaries = _boundaryCalculator.Calculate(bitMapIn.Width, bitMapIn.Height, stampSize.Width, stampSize.Height, _padPixels);
-
+            var (stampSize, stampFont)  = _stampSizeService.GetStampSize(imageSize, imgGrphx, text, fontIn, percentOfImage);
+            var boundaries = _boundaryCalculator.Calculate(imageSize, stampSize, _padPixels);
             var coordinates = _coordinatesService.Get(position, boundaries);
 
-            _drawingService.DrawStamp(imgGrphx, brush, font, text, coordinates);
+            _drawingService.DrawStamp(imgGrphx, brush, stampFont, text, coordinates);
 
-            return bitMapOut;
+            //_drawingService.DrawBackground(imgGrphx, new Coordinates(20, 20), 100, 1000);
+
+            return bitmap;
         }
 
     }
