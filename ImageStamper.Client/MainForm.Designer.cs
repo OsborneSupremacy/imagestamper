@@ -118,6 +118,7 @@ namespace ImageStamper.Client
             this.DatePicker.Name = "DatePicker";
             this.DatePicker.Size = new System.Drawing.Size(274, 23);
             this.DatePicker.TabIndex = 4;
+            this.DatePicker.ValueChanged += new System.EventHandler(this.DatePicker_ValueChanged);
             // 
             // TimePicker
             // 
@@ -130,6 +131,7 @@ namespace ImageStamper.Client
             this.TimePicker.ShowUpDown = true;
             this.TimePicker.Size = new System.Drawing.Size(274, 23);
             this.TimePicker.TabIndex = 5;
+            this.TimePicker.ValueChanged += new System.EventHandler(this.TimePicker_ValueChanged);
             // 
             // DateFormatTextBox
             // 
@@ -138,6 +140,7 @@ namespace ImageStamper.Client
             this.DateFormatTextBox.Size = new System.Drawing.Size(274, 23);
             this.DateFormatTextBox.TabIndex = 6;
             this.DateFormatTextBox.Text = "MM/dd/yyyy";
+            this.DateFormatTextBox.Leave += new System.EventHandler(this.DateFormatTextBox_Leave);
             // 
             // TimeFormatTextBox
             // 
@@ -146,6 +149,7 @@ namespace ImageStamper.Client
             this.TimeFormatTextBox.Size = new System.Drawing.Size(274, 23);
             this.TimeFormatTextBox.TabIndex = 7;
             this.TimeFormatTextBox.Text = "hh:mm tt";
+            this.TimeFormatTextBox.Leave += new System.EventHandler(this.TimeFormatTextBox_Leave);
             // 
             // label1
             // 
@@ -367,6 +371,7 @@ namespace ImageStamper.Client
             this.BackgroundFillCheckBox.TabIndex = 20;
             this.BackgroundFillCheckBox.Text = "Background Fill";
             this.BackgroundFillCheckBox.UseVisualStyleBackColor = true;
+            this.BackgroundFillCheckBox.CheckedChanged += new System.EventHandler(this.BackgroundFillCheckBox_CheckedChanged);
             // 
             // PreviewPictureBackGroundBox
             // 
