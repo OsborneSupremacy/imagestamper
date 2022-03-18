@@ -86,7 +86,7 @@ namespace ImageStamper.Client
             // 
             // FontTextBox
             // 
-            this.FontTextBox.Font = new System.Drawing.Font("Arial Narrow", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.FontTextBox.Font = new System.Drawing.Font("Arial Narrow", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.FontTextBox.Location = new System.Drawing.Point(605, 222);
             this.FontTextBox.Name = "FontTextBox";
             this.FontTextBox.ReadOnly = true;

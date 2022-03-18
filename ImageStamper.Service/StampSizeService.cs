@@ -32,7 +32,7 @@ namespace ImageStamper.Service
 
         private (SizeF, Font) MeasureStampSize(Graphics imgGrphx, string text, Font font, int fontSize)
         {
-            var newFont = new Font(font.FontFamily, fontSize, FontStyle.Bold);
+            var newFont = new Font(font.FontFamily, fontSize, font.Style);
             return (imgGrphx.MeasureString(text, newFont), newFont);
         }
     }
