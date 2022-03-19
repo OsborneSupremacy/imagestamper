@@ -63,6 +63,7 @@ namespace ImageStamper.Client
             this.BackgroundFillCheckBox = new System.Windows.Forms.CheckBox();
             this.PreviewPictureBackGroundBox = new System.Windows.Forms.PictureBox();
             this.RefreshPreviewButton = new System.Windows.Forms.Button();
+            this.ExecuteButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.SizeTrackBar)).BeginInit();
             this.PositionGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PreviewPictureBackGroundBox)).BeginInit();
@@ -122,7 +123,6 @@ namespace ImageStamper.Client
             // 
             // TimePicker
             // 
-            this.TimePicker.Checked = false;
             this.TimePicker.CustomFormat = "hh:mm tt";
             this.TimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.TimePicker.Location = new System.Drawing.Point(605, 110);
@@ -394,12 +394,26 @@ namespace ImageStamper.Client
             this.RefreshPreviewButton.UseVisualStyleBackColor = true;
             this.RefreshPreviewButton.Click += new System.EventHandler(this.RefreshPreviewButton_Click);
             // 
+            // ExecuteButton
+            // 
+            this.ExecuteButton.BackColor = System.Drawing.Color.Red;
+            this.ExecuteButton.Font = new System.Drawing.Font("Gill Sans Ultra Bold", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.ExecuteButton.ForeColor = System.Drawing.Color.White;
+            this.ExecuteButton.Location = new System.Drawing.Point(12, 445);
+            this.ExecuteButton.Name = "ExecuteButton";
+            this.ExecuteButton.Size = new System.Drawing.Size(476, 98);
+            this.ExecuteButton.TabIndex = 24;
+            this.ExecuteButton.Text = "Stamp Images";
+            this.ExecuteButton.UseVisualStyleBackColor = false;
+            this.ExecuteButton.Click += new System.EventHandler(this.ExecuteButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(891, 555);
+            this.Controls.Add(this.ExecuteButton);
             this.Controls.Add(this.RefreshPreviewButton);
             this.Controls.Add(this.PreviewPictureBackGroundBox);
             this.Controls.Add(this.BackgroundFillCheckBox);
@@ -467,5 +481,6 @@ namespace ImageStamper.Client
         private CheckBox BackgroundFillCheckBox;
         private PictureBox PreviewPictureBackGroundBox;
         private Button RefreshPreviewButton;
+        private Button ExecuteButton;
     }
 }

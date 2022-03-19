@@ -9,7 +9,7 @@ namespace ImageStamper.Client
         private readonly MainForm _mainForm;
 
         public ConsoleHostedService(
-            IHostApplicationLifetime applicationLifetime, 
+            IHostApplicationLifetime applicationLifetime,
             MainForm mainForm)
         {
             _applicationLifetime = applicationLifetime ?? throw new ArgumentNullException(nameof(applicationLifetime));

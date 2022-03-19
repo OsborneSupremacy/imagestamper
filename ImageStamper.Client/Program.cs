@@ -26,7 +26,8 @@ namespace ImageStamper.Client
                         .Where(x => !x.IsAbstract)
                         .Where(x => x.IsPublic)
                         .ToList()
-                        .ForEach(x => {
+                        .ForEach(x =>
+                        {
                             services.AddSingleton(x);
                         });
 

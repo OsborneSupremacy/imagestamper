@@ -5,19 +5,27 @@ namespace ImageStamper.Client
 {
     public partial class MainForm : Form
     {
+        private readonly BatchProcessor _batchProcessor;
+
+        private readonly BatchValidator _batchValidator;
+
         private readonly Processor _processor;
 
-        private readonly StampTextComposer _stampTextComposer;
+        private readonly DateTimeFormatterFactory _dateTimeFormatterFactory;
 
         private PositionConstants _position = PositionConstants.BottomRight;
 
         public MainForm(
             Processor processor,
-            StampTextComposer stampTextComposer
+            BatchProcessor batchProcessor,
+            BatchValidator batchValidator,
+            DateTimeFormatterFactory dateTimeFormatterFactory
             )
         {
             this._processor = processor ?? throw new ArgumentNullException(nameof(processor));
-            this._stampTextComposer = stampTextComposer ?? throw new ArgumentNullException(nameof(stampTextComposer));
+            this._batchProcessor = batchProcessor ?? throw new ArgumentNullException(nameof(batchProcessor));
+            this._batchValidator = batchValidator ?? throw new ArgumentNullException(nameof(batchValidator));
+            this._dateTimeFormatterFactory = dateTimeFormatterFactory ?? throw new ArgumentNullException(nameof(dateTimeFormatterFactory));
 
             InitializeComponent();
 
@@ -51,16 +59,16 @@ namespace ImageStamper.Client
             RefreshPreview();
         }
 
-        private void SetColor(Color color) => 
+        private void SetColor(Color color) =>
             ColorTextBox.BackColor = color;
 
-        private void SizeTrackBar_Scroll(object sender, EventArgs e) => 
+        private void SizeTrackBar_Scroll(object sender, EventArgs e) =>
             SetSizeText(((TrackBar)sender).Value);
 
         private void SetSizeText() =>
             SetSizeText(SizeTrackBar.Value);
 
-        private void SetSizeText(int size) => 
+        private void SetSizeText(int size) =>
             SizeTextBox.Text = $"{size}% of image's longest side";
 
         private void PositionButton_Click(object sender, EventArgs e)
@@ -75,18 +83,20 @@ namespace ImageStamper.Client
             _position = (PositionConstants)Enum.Parse(typeof(PositionConstants), positionName, true);
         }
 
-        private void RefreshPreviewButton_Click(object sender, EventArgs e) => 
+        private void RefreshPreviewButton_Click(object sender, EventArgs e) =>
             RefreshPreview();
 
         private void RefreshPreview()
         {
+            var dateTimeFormatter = _dateTimeFormatterFactory.Create(DateFormatTextBox.Text, TimePicker.Checked, TimeFormatTextBox.Text);
+
             Bitmap preview = _processor
                 .Process(
                     Properties.Resources.IMG_3192,
                     ColorTextBox.BackColor,
                     BackgroundFillCheckBox.Checked,
                     FontTextBox.Font,
-                    _stampTextComposer.Compose(DatePicker.Value, DateFormatTextBox.Text, TimePicker.Checked, TimePicker.Value, TimeFormatTextBox.Text),
+                    dateTimeFormatter.Invoke(DatePicker.Value, TimePicker.Value),
                     PositionConstants.YCenterXCenter,
                     50
                 );
@@ -104,5 +114,10 @@ namespace ImageStamper.Client
         private void DatePicker_ValueChanged(object sender, EventArgs e) => RefreshPreview();
 
         private void DateFormatTextBox_Leave(object sender, EventArgs e) => RefreshPreview();
+
+        private void ExecuteButton_Click(object sender, EventArgs e)
+        {
+            
+        }
     }
 }

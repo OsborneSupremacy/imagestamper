@@ -49,7 +49,7 @@ namespace ImageStamper.Service
 
             SolidBrush brush = new(color);
 
-            var (stampSize, stampFont)  = _stampSizeService.GetStampSize(imageSize, imgGrphx, text, fontIn, percentOfImage);
+            var (stampSize, stampFont) = _stampSizeService.GetStampSize(imageSize, imgGrphx, text, fontIn, percentOfImage);
             var boundaries = _boundaryCalculator.Calculate(imageSize, stampSize, _padPixels);
             var coordinates = _coordinatesService.Get(position, boundaries);
 
