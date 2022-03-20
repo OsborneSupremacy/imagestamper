@@ -1,30 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 
 namespace ImageStamper.Service
 {
     public class DateTimeFormatterFactory
     {
-        public Func<DateTime, DateTime, string> Create(string dateFormat, bool includeTime, string timeFormat)
+        public Func<DateTime, string> Create(string dateFormat, bool includeTime, string timeFormat)
         {
             StringBuilder combinedFormat = new(dateFormat);
-            if(includeTime)
+            if(includeTime && !string.IsNullOrWhiteSpace(timeFormat))
                 combinedFormat.Append($" {timeFormat}");
 
-            return (DateTime dateInput, DateTime timeInput) => {
-
-                StringBuilder result = new(dateInput.ToString(dateFormat));
-
-                if(includeTime && !string.IsNullOrWhiteSpace(timeFormat))
-                {
-                    result.Append(" ");
-                    result.Append(timeInput.ToString(timeFormat));
-                }
-
-                return result.ToString();
+            return (DateTime input) => {
+                return input.ToString(combinedFormat.ToString());
             };
         }
     }

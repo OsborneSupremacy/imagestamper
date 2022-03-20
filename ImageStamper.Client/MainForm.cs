@@ -1,5 +1,7 @@
 ﻿using ImageStamper.Objects;
 using ImageStamper.Service;
+using System.Reflection;
+using System.Text;
 
 namespace ImageStamper.Client
 {
@@ -31,6 +33,8 @@ namespace ImageStamper.Client
 
             SetFont(FontTextBox.Font); // doing this so that the displayed name is consistent with the font
             SetSizeText();
+            SetInitialFolder();
+            SetTempFolder();
 
             RefreshPreview();
         }
@@ -88,6 +92,7 @@ namespace ImageStamper.Client
 
         private void RefreshPreview()
         {
+            var combinedDateTime = DatePicker.Value.Date.Add(TimePicker.Value.TimeOfDay);
             var dateTimeFormatter = _dateTimeFormatterFactory.Create(DateFormatTextBox.Text, TimePicker.Checked, TimeFormatTextBox.Text);
 
             Bitmap preview = _processor
@@ -96,13 +101,29 @@ namespace ImageStamper.Client
                     ColorTextBox.BackColor,
                     BackgroundFillCheckBox.Checked,
                     FontTextBox.Font,
-                    dateTimeFormatter.Invoke(DatePicker.Value, TimePicker.Value),
+                    dateTimeFormatter.Invoke(combinedDateTime),
                     PositionConstants.YCenterXCenter,
-                    50
+                    60
                 );
 
             PreviewPictureBackGroundBox.Image = preview;
             PreviewPictureBackGroundBox.Refresh();
+        }
+
+        private void NewTempFolderButton_Click(object sender, EventArgs e) => SetTempFolder();
+
+        private void SetTempFolder() => 
+            this.OutputFolderTextbox.Text = GetTempFolderName();
+
+        private string GetTempFolderName() =>
+            Path.Combine(Path.GetTempPath(), nameof(ImageStamper), DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss"));
+
+        private void SetInitialFolder()
+        {
+            var appDirectory = new DirectoryInfo(Path.Combine(Path.GetTempPath(), nameof(ImageStamper)));
+            if(!appDirectory.Exists)
+                appDirectory.Create();
+            this.folderBrowserDialog1.InitialDirectory = appDirectory.FullName;
         }
 
         private void BackgroundFillCheckBox_CheckedChanged(object sender, EventArgs e) => RefreshPreview();
@@ -117,7 +138,49 @@ namespace ImageStamper.Client
 
         private void ExecuteButton_Click(object sender, EventArgs e)
         {
-            
+            var outputDirectory = new DirectoryInfo(OutputFolderTextbox.Text);
+            if (!outputDirectory.Exists)
+                outputDirectory.Create();
+
+            var combinedDateTime = DatePicker.Value.Date.Add(TimePicker.Value.TimeOfDay);
+            var dateTimeFormatter = _dateTimeFormatterFactory.Create(DateFormatTextBox.Text, TimePicker.Checked, TimeFormatTextBox.Text);
+
+            var imageFiles = new List<FileInfo>();
+
+            var (isValid, errors) = _batchValidator.Validate(imageFiles, outputDirectory);
+
+            if(!isValid)
+            {
+                StringBuilder msg = new(@"Please correct the following problems:
+
+");
+                errors.ForEach((error) => {
+                    msg.AppendLine($"• {error}");
+                });
+                MessageBox.Show(msg.ToString(), "Problems", MessageBoxButtons.OK);
+                return;
+            }
+
+            _batchProcessor.ProcessAsync(
+                imageFiles,
+                outputDirectory,
+                ColorTextBox.BackColor,
+                BackgroundFillCheckBox.Checked,
+                FontTextBox.Font,
+                UseExifCheckBox.Checked,
+                combinedDateTime,
+                dateTimeFormatter,
+                _position,
+                SizeTrackBar.Value
+            ).GetAwaiter().GetResult();
+        }
+
+        private void FolderBrowseButton_Click(object sender, EventArgs e)
+        {
+            if (!folderBrowserDialog1.ShowDialog().Equals(DialogResult.OK))
+                return;
+
+            OutputFolderTextbox.Text = folderBrowserDialog1.SelectedPath;
         }
     }
 }

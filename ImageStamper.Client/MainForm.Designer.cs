@@ -64,6 +64,11 @@ namespace ImageStamper.Client
             this.PreviewPictureBackGroundBox = new System.Windows.Forms.PictureBox();
             this.RefreshPreviewButton = new System.Windows.Forms.Button();
             this.ExecuteButton = new System.Windows.Forms.Button();
+            this.OutputFolderTextbox = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.NewTempFolderButton = new System.Windows.Forms.Button();
+            this.FolderBrowseButton = new System.Windows.Forms.Button();
+            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             ((System.ComponentModel.ISupportInitialize)(this.SizeTrackBar)).BeginInit();
             this.PositionGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PreviewPictureBackGroundBox)).BeginInit();
@@ -407,12 +412,56 @@ namespace ImageStamper.Client
             this.ExecuteButton.UseVisualStyleBackColor = false;
             this.ExecuteButton.Click += new System.EventHandler(this.ExecuteButton_Click);
             // 
+            // OutputFolderTextbox
+            // 
+            this.OutputFolderTextbox.Location = new System.Drawing.Point(12, 383);
+            this.OutputFolderTextbox.Name = "OutputFolderTextbox";
+            this.OutputFolderTextbox.Size = new System.Drawing.Size(476, 23);
+            this.OutputFolderTextbox.TabIndex = 25;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(12, 362);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(84, 15);
+            this.label7.TabIndex = 26;
+            this.label7.Text = "Output Folder:";
+            // 
+            // NewTempFolderButton
+            // 
+            this.NewTempFolderButton.Location = new System.Drawing.Point(320, 412);
+            this.NewTempFolderButton.Name = "NewTempFolderButton";
+            this.NewTempFolderButton.Size = new System.Drawing.Size(168, 23);
+            this.NewTempFolderButton.TabIndex = 27;
+            this.NewTempFolderButton.Text = "New Temp Folder";
+            this.NewTempFolderButton.UseVisualStyleBackColor = true;
+            this.NewTempFolderButton.Click += new System.EventHandler(this.NewTempFolderButton_Click);
+            // 
+            // FolderBrowseButton
+            // 
+            this.FolderBrowseButton.Location = new System.Drawing.Point(12, 412);
+            this.FolderBrowseButton.Name = "FolderBrowseButton";
+            this.FolderBrowseButton.Size = new System.Drawing.Size(168, 23);
+            this.FolderBrowseButton.TabIndex = 28;
+            this.FolderBrowseButton.Text = "Browse";
+            this.FolderBrowseButton.UseVisualStyleBackColor = true;
+            this.FolderBrowseButton.Click += new System.EventHandler(this.FolderBrowseButton_Click);
+            // 
+            // folderBrowserDialog1
+            // 
+            this.folderBrowserDialog1.RootFolder = System.Environment.SpecialFolder.MyComputer;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(891, 555);
+            this.Controls.Add(this.FolderBrowseButton);
+            this.Controls.Add(this.NewTempFolderButton);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.OutputFolderTextbox);
             this.Controls.Add(this.ExecuteButton);
             this.Controls.Add(this.RefreshPreviewButton);
             this.Controls.Add(this.PreviewPictureBackGroundBox);
@@ -482,5 +531,10 @@ namespace ImageStamper.Client
         private PictureBox PreviewPictureBackGroundBox;
         private Button RefreshPreviewButton;
         private Button ExecuteButton;
+        private TextBox OutputFolderTextbox;
+        private Label label7;
+        private Button NewTempFolderButton;
+        private Button FolderBrowseButton;
+        internal FolderBrowserDialog folderBrowserDialog1;
     }
 }

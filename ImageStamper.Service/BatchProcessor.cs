@@ -1,10 +1,6 @@
 ﻿using ImageStamper.Objects;
-using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Drawing.Imaging;
 
 namespace ImageStamper.Service
 {
@@ -20,29 +16,41 @@ namespace ImageStamper.Service
             _exifExtractor = exifExtractor ?? throw new ArgumentNullException(nameof(exifExtractor));
         }
 
-        public void Process(
+        public async Task ProcessAsync(
             IEnumerable<FileInfo> imageFiles,
             DirectoryInfo outputDirectory,
             Color color,
             bool backGroundFill,
             Font font,
             bool useExif,
-            string defaultText,
+            DateTime defaultDateTime,
+            Func<DateTime, string> dateTimeFormatter,
             PositionConstants position,
-            int percentOfImage)
+            int percentOfImage
+            )
         {
             foreach(var imageFile in imageFiles)
             {
-                var bitmap = new Bitmap(imageFile.FullName);
-
-                // need to be able to format
-                if(useExif)
-                {
-                    var stampText = _exifExtractor.ExtractDateAsync(imageFile.FullName);
-                }
-
-                var newFile = _processor.Process(bitmap, color, backGroundFill, font, defaultText, position, percentOfImage);
+                using var bitmap = new Bitmap(imageFile.FullName);
+                var text = await GetStampTextAsync(imageFile, useExif, defaultDateTime, dateTimeFormatter);
+                using var newBitmap = _processor.Process(bitmap, color, backGroundFill, font, text, position, percentOfImage);
+                newBitmap.Save(Path.Combine(outputDirectory.FullName, imageFile.Name), ImageFormat.Jpeg);
             }
+        }
+
+        private async Task<string> GetStampTextAsync(
+            FileInfo imageFile, 
+            bool useExif, 
+            DateTime defaultDateTime, 
+            Func<DateTime, string> dateTimeFormatter
+            )
+        {
+            DateTime? exifDate = null;
+
+            if (useExif)
+                exifDate = await _exifExtractor.ExtractDateAsync(imageFile.FullName);
+
+            return dateTimeFormatter.Invoke(exifDate ?? defaultDateTime);
         }
     }
 }
