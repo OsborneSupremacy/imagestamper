@@ -177,10 +177,38 @@ namespace ImageStamper.Client
 
         private void FolderBrowseButton_Click(object sender, EventArgs e)
         {
-            if (!folderBrowserDialog1.ShowDialog().Equals(DialogResult.OK))
-                return;
+            Func<string> dialogDelegate = () => {
 
-            OutputFolderTextbox.Text = folderBrowserDialog1.SelectedPath;
+                if (!folderBrowserDialog1.ShowDialog().Equals(DialogResult.OK))
+                    return string.Empty;
+
+                return folderBrowserDialog1.SelectedPath;
+            };
+
+            var result  = StaDialogRunner(dialogDelegate, string.Empty);
+
+            if (string.IsNullOrWhiteSpace(result)) return;
+            OutputFolderTextbox.Text = result;
         }
+
+        /// <summary>
+        /// Some dialogs needs to be access in STA threads. This should be used for those.
+        /// </summary>
+        /// <param name="dialogDelegate"></param>
+        /// <returns></returns>
+        private T StaDialogRunner<T>(Func<T> dialogDelegate, T valueIn) 
+        {
+            T valueOut = valueIn;
+
+            Thread thread = new(() => {
+                valueOut = dialogDelegate.Invoke();
+            });
+            thread.SetApartmentState(ApartmentState.STA);
+            thread.Start();
+            thread.Join();
+
+            return valueOut;
+        }
+
     }
 }

@@ -450,6 +450,7 @@ namespace ImageStamper.Client
             // 
             // folderBrowserDialog1
             // 
+            this.folderBrowserDialog1.AutoUpgradeEnabled = false;
             this.folderBrowserDialog1.RootFolder = System.Environment.SpecialFolder.MyComputer;
             // 
             // MainForm
@@ -535,6 +536,6 @@ namespace ImageStamper.Client
         private Label label7;
         private Button NewTempFolderButton;
         private Button FolderBrowseButton;
-        internal FolderBrowserDialog folderBrowserDialog1;
+        private FolderBrowserDialog folderBrowserDialog1;
     }
 }
