@@ -196,9 +196,9 @@ namespace ImageStamper.Client
         /// </summary>
         /// <param name="dialogDelegate"></param>
         /// <returns></returns>
-        private T StaDialogRunner<T>(Func<T> dialogDelegate, T valueIn) 
+        private T StaDialogRunner<T>(Func<T> dialogDelegate, T defaultValue) 
         {
-            T valueOut = valueIn;
+            T valueOut = defaultValue;
 
             Thread thread = new(() => {
                 valueOut = dialogDelegate.Invoke();
