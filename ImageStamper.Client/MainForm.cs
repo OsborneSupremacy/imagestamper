@@ -1,6 +1,5 @@
 ﻿using ImageStamper.Objects;
 using ImageStamper.Service;
-using System.Reflection;
 using System.Text;
 
 namespace ImageStamper.Client
@@ -190,7 +189,7 @@ namespace ImageStamper.Client
         }
 
         /// <summary>
-        /// Some dialogs needs to be access in STA threads. This should be used for those.
+        /// Some dialogs needs to be accessed in STA threads. This should be used for those.
         /// </summary>
         /// <param name="dialogDelegate"></param>
         /// <returns></returns>
@@ -222,10 +221,8 @@ namespace ImageStamper.Client
             if(!results.Any()) return;
 
             foreach(var result in results)
-            {
                 if (!ToProcessListbox.Items.Contains(result))
                     ToProcessListbox.Items.Add(result);
-            }
         }
 
         private void AddFolderButton_Click(object sender, EventArgs e)
@@ -240,10 +237,25 @@ namespace ImageStamper.Client
             if (string.IsNullOrWhiteSpace(result)) return;
 
             foreach(var file in new DirectoryInfo(result).GetFiles().Select(x => x.FullName))
-            {
                 if (!ToProcessListbox.Items.Contains(file))
                     ToProcessListbox.Items.Add(file);
-            }
+        }
+
+        private void ClearAllButton_Click(object sender, EventArgs e) => 
+            ToProcessListbox.Items.Clear();
+
+        private void ClearSelectedButton_Click(object sender, EventArgs e)
+        {
+            var selectedItems = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
+            foreach (var selectedItem in ToProcessListbox.SelectedItems)
+                selectedItems.Add(selectedItem.ToString()!);
+
+            for(int i = ToProcessListbox.Items.Count - 1; i >= 0; i--)
+            {
+                if (selectedItems.Contains(ToProcessListbox.Items[i]))
+                    ToProcessListbox.Items.RemoveAt(i);
+            }; 
         }
     }
 }

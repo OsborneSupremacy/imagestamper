@@ -507,6 +507,7 @@ namespace ImageStamper.Client
             this.ClearSelectedButton.TabIndex = 33;
             this.ClearSelectedButton.Text = "Clear Selected";
             this.ClearSelectedButton.UseVisualStyleBackColor = true;
+            this.ClearSelectedButton.Click += new System.EventHandler(this.ClearSelectedButton_Click);
             // 
             // ClearAllButton
             // 
@@ -516,6 +517,7 @@ namespace ImageStamper.Client
             this.ClearAllButton.TabIndex = 34;
             this.ClearAllButton.Text = "Clear All";
             this.ClearAllButton.UseVisualStyleBackColor = true;
+            this.ClearAllButton.Click += new System.EventHandler(this.ClearAllButton_Click);
             // 
             // openFileDialog1
             // 
