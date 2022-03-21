@@ -1,11 +1,14 @@
 ﻿using ImageStamper.Objects;
 using ImageStamper.Service;
+using Microsoft.Extensions.Options;
 using System.Text;
 
 namespace ImageStamper.Client
 {
     public partial class MainForm : Form
     {
+        private readonly Settings _settings;
+
         private readonly BatchProcessor _batchProcessor;
 
         private readonly BatchValidator _batchValidator;
@@ -16,17 +19,22 @@ namespace ImageStamper.Client
 
         private PositionConstants _position = PositionConstants.BottomRight;
 
+        private readonly HashSet<string> _supportedImageTypes = new();
+
         public MainForm(
+            IOptions<Settings> settingsOptions,
             Processor processor,
             BatchProcessor batchProcessor,
             BatchValidator batchValidator,
             DateTimeFormatterFactory dateTimeFormatterFactory
             )
         {
+            this._settings = settingsOptions?.Value ?? throw new ArgumentNullException(nameof(settingsOptions));
             this._processor = processor ?? throw new ArgumentNullException(nameof(processor));
             this._batchProcessor = batchProcessor ?? throw new ArgumentNullException(nameof(batchProcessor));
             this._batchValidator = batchValidator ?? throw new ArgumentNullException(nameof(batchValidator));
             this._dateTimeFormatterFactory = dateTimeFormatterFactory ?? throw new ArgumentNullException(nameof(dateTimeFormatterFactory));
+            this._supportedImageTypes = _settings.SupportedImageTypes.ToHashSet();
 
             InitializeComponent();
 
@@ -40,6 +48,35 @@ namespace ImageStamper.Client
 
         private void Main_Load(object sender, EventArgs e)
         {
+            this.openFileDialog1.Filter = ComposeFileDialogFilter();
+        }
+
+        /// <summary>
+        /// Composes a filter string like this:
+        /// 
+        /// Supported Image Files(*.bmp, *.jpg, *.jpeg, *.gif, *.png) | *.bmp; *.jpg; *.jpeg; *.gif; *.png
+        /// </summary>
+        /// <returns></returns>
+        private string ComposeFileDialogFilter()
+        {
+            StringBuilder s = new();
+            s.Append("Supported Image Files(");
+
+            _settings
+                .SupportedImageTypes
+                .Aggregate(s,
+                    (cumulative, add) => cumulative.Append($"*{add}, "), final => final.ToString().Trim()
+                );
+
+            s.Append(") | ");
+
+            _settings
+                .SupportedImageTypes
+                .Aggregate(s,
+                    (cumulative, add) => cumulative.Append($"*{add}; "), final => final.ToString().Trim()
+                );
+
+            return s.ToString();
         }
 
         private void SelectFontButton_Click(object sender, EventArgs e)
@@ -237,7 +274,8 @@ namespace ImageStamper.Client
             if (string.IsNullOrWhiteSpace(result)) return;
 
             foreach(var file in new DirectoryInfo(result).GetFiles().Select(x => x.FullName))
-                if (!ToProcessListbox.Items.Contains(file))
+                if (!ToProcessListbox.Items.Contains(file) 
+                    && _supportedImageTypes.Contains(new FileInfo(file).Extension, StringComparer.OrdinalIgnoreCase))
                     ToProcessListbox.Items.Add(file);
         }
 
@@ -252,10 +290,8 @@ namespace ImageStamper.Client
                 selectedItems.Add(selectedItem.ToString()!);
 
             for(int i = ToProcessListbox.Items.Count - 1; i >= 0; i--)
-            {
                 if (selectedItems.Contains(ToProcessListbox.Items[i]))
                     ToProcessListbox.Items.RemoveAt(i);
-            }; 
         }
     }
 }

@@ -3,7 +3,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Reflection;
-using System.Linq;
 
 namespace ImageStamper.Client
 {
@@ -21,6 +20,10 @@ namespace ImageStamper.Client
                 {
                     services.AddHostedService<ConsoleHostedService>();
 
+                    services.AddOptions<Settings>()
+                        .Bind(configuration.GetSection("Settings"))
+                        .ValidateDataAnnotations();
+
                     Assembly.GetAssembly(typeof(Processor))!
                         .GetTypes()
                         .Where(x => !x.IsAbstract)
@@ -35,6 +38,5 @@ namespace ImageStamper.Client
                 })
                 .RunConsoleAsync();
         }
-
     }
 }

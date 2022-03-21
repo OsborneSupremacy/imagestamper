@@ -42,12 +42,12 @@ namespace ImageStamper.Service
             {
                 var bitmap = new Bitmap(imageFile.FullName);
                 if (bitmap == null)
-                    return (false, $"{imageFile.FullName} is not a compatible image type.");
+                    return (false, $"{imageFile.FullName} is not a supported image type.");
                 return (true, string.Empty);
             }
             catch (PlatformNotSupportedException)
             {
-                return (false, $"{imageFile.FullName} is not a compatible image type.");
+                return (false, $"{imageFile.FullName} is not a supported image type.");
             };
         }
     }

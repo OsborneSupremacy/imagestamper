@@ -521,6 +521,8 @@ namespace ImageStamper.Client
             // 
             // openFileDialog1
             // 
+            this.openFileDialog1.Filter = "Supported Image Files (*.bmp, *.jpg, *.jpeg, *.gif, *.png)|*.bmp;*.jpg;*.jpeg;*.g" +
+    "if;*.png";
             this.openFileDialog1.Multiselect = true;
             // 
             // MainForm
