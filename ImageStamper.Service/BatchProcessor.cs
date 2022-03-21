@@ -29,19 +29,23 @@ namespace ImageStamper.Service
             int percentOfImage
             )
         {
-            foreach(var imageFile in imageFiles)
+            foreach (var imageFile in imageFiles)
             {
                 using var bitmap = new Bitmap(imageFile.FullName);
                 var text = await GetStampTextAsync(imageFile, useExif, defaultDateTime, dateTimeFormatter);
                 using var newBitmap = _processor.Process(bitmap, color, backGroundFill, font, text, position, percentOfImage);
+
+                if (newBitmap == null)
+                    continue;
+
                 newBitmap.Save(Path.Combine(outputDirectory.FullName, imageFile.Name), ImageFormat.Jpeg);
             }
         }
 
         private async Task<string> GetStampTextAsync(
-            FileInfo imageFile, 
-            bool useExif, 
-            DateTime defaultDateTime, 
+            FileInfo imageFile,
+            bool useExif,
+            DateTime defaultDateTime,
             Func<DateTime, string> dateTimeFormatter
             )
         {

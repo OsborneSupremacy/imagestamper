@@ -141,7 +141,7 @@ namespace ImageStamper.Client
                     dateTimeFormatter.Invoke(combinedDateTime),
                     PositionConstants.YCenterXCenter,
                     60
-                );
+                )!;
 
             PreviewPictureBackGroundBox.Image = preview;
             PreviewPictureBackGroundBox.Refresh();
@@ -149,7 +149,7 @@ namespace ImageStamper.Client
 
         private void NewTempFolderButton_Click(object sender, EventArgs e) => SetTempFolder();
 
-        private void SetTempFolder() => 
+        private void SetTempFolder() =>
             this.OutputFolderTextbox.Text = GetTempFolderName();
 
         private string GetTempFolderName() =>
@@ -158,7 +158,7 @@ namespace ImageStamper.Client
         private void SetInitialFolder()
         {
             var appDirectory = new DirectoryInfo(Path.Combine(Path.GetTempPath(), nameof(ImageStamper)));
-            if(!appDirectory.Exists)
+            if (!appDirectory.Exists)
                 appDirectory.Create();
             this.folderBrowserDialog1.InitialDirectory = appDirectory.FullName;
         }
@@ -188,12 +188,13 @@ namespace ImageStamper.Client
 
             var (isValid, errors) = _batchValidator.Validate(imageFiles, outputDirectory);
 
-            if(!isValid)
+            if (!isValid)
             {
                 StringBuilder msg = new(@"Please correct the following problems:
 
 ");
-                errors.ForEach((error) => {
+                errors.ForEach((error) =>
+                {
                     msg.AppendLine($"• {error}");
                 });
                 MessageBox.Show(msg.ToString(), "Problems", MessageBoxButtons.OK);
@@ -202,7 +203,8 @@ namespace ImageStamper.Client
 
             var size = SizeTrackBar.Value;
 
-            Action processor = () => {
+            Action processor = () =>
+            {
                 _batchProcessor.ProcessAsync(
                     imageFiles,
                     outputDirectory,
@@ -224,13 +226,14 @@ namespace ImageStamper.Client
 
         private void FolderBrowseButton_Click(object sender, EventArgs e)
         {
-            Func<string> dialogDelegate = () => {
+            Func<string> dialogDelegate = () =>
+            {
                 if (!folderBrowserDialog1.ShowDialog().Equals(DialogResult.OK))
                     return string.Empty;
                 return folderBrowserDialog1.SelectedPath;
             };
 
-            var result  = RunSta(dialogDelegate, string.Empty);
+            var result = RunSta(dialogDelegate, string.Empty);
 
             if (string.IsNullOrWhiteSpace(result)) return;
             OutputFolderTextbox.Text = result;
@@ -238,7 +241,8 @@ namespace ImageStamper.Client
 
         private void RunSta(Action delegateAction)
         {
-            Thread thread = new(() => {
+            Thread thread = new(() =>
+            {
                 delegateAction.Invoke();
             });
             thread.SetApartmentState(ApartmentState.STA);
@@ -251,11 +255,12 @@ namespace ImageStamper.Client
         /// </summary>
         /// <param name="dialogDelegate"></param>
         /// <returns></returns>
-        private T RunSta<T>(Func<T> dialogDelegate, T defaultValue) 
+        private T RunSta<T>(Func<T> dialogDelegate, T defaultValue)
         {
             T valueOut = defaultValue;
 
-            Thread thread = new(() => {
+            Thread thread = new(() =>
+            {
                 valueOut = dialogDelegate.Invoke();
             });
             thread.SetApartmentState(ApartmentState.STA);
@@ -276,16 +281,17 @@ namespace ImageStamper.Client
             };
 
             var results = RunSta(dialogDelegate, Enumerable.Empty<string>().ToArray());
-            if(!results.Any()) return;
+            if (!results.Any()) return;
 
-            foreach(var result in results)
+            foreach (var result in results)
                 if (!ToProcessListbox.Items.Contains(result))
                     ToProcessListbox.Items.Add(result);
         }
 
         private void AddFolderButton_Click(object sender, EventArgs e)
         {
-            Func<string> dialogDelegate = () => {
+            Func<string> dialogDelegate = () =>
+            {
                 if (!folderBrowserDialog1.ShowDialog().Equals(DialogResult.OK))
                     return string.Empty;
                 return folderBrowserDialog1.SelectedPath;
@@ -294,13 +300,13 @@ namespace ImageStamper.Client
             var result = RunSta(dialogDelegate, string.Empty);
             if (string.IsNullOrWhiteSpace(result)) return;
 
-            foreach(var file in new DirectoryInfo(result).GetFiles().Select(x => x.FullName))
-                if (!ToProcessListbox.Items.Contains(file) 
+            foreach (var file in new DirectoryInfo(result).GetFiles().Select(x => x.FullName))
+                if (!ToProcessListbox.Items.Contains(file)
                     && _supportedImageTypes.Contains(new FileInfo(file).Extension, StringComparer.OrdinalIgnoreCase))
                     ToProcessListbox.Items.Add(file);
         }
 
-        private void ClearAllButton_Click(object sender, EventArgs e) => 
+        private void ClearAllButton_Click(object sender, EventArgs e) =>
             ToProcessListbox.Items.Clear();
 
         private void ClearSelectedButton_Click(object sender, EventArgs e)
@@ -310,7 +316,7 @@ namespace ImageStamper.Client
             foreach (var selectedItem in ToProcessListbox.SelectedItems)
                 selectedItems.Add(selectedItem.ToString()!);
 
-            for(int i = ToProcessListbox.Items.Count - 1; i >= 0; i--)
+            for (int i = ToProcessListbox.Items.Count - 1; i >= 0; i--)
                 if (selectedItems.Contains(ToProcessListbox.Items[i]))
                     ToProcessListbox.Items.RemoveAt(i);
         }

@@ -153,7 +153,7 @@ Public Class ImageStamperClass
                     xCoord = xRight
                     yCoord = yTop
                 Case Else
-                    Throw New System.ArgumentOutOfRangeException
+                    Throw New ArgumentOutOfRangeException
             End Select
 
             If BackgroundFill Then
@@ -185,7 +185,7 @@ Public Class ImageStamperClass
 
                     Try
                         propItem = targetImg.GetPropertyItem(36867)
-                    Catch ex As System.ArgumentException
+                    Catch ex As ArgumentException
                         Return result
                     End Try
 
@@ -239,8 +239,8 @@ Public Class ImageStamperClass
 
         Public Sub New()
             MyBase.New()
-            For Each color As PropertyInfo In GetType(System.Drawing.Color).GetProperties(BindingFlags.[Static] Or BindingFlags.[Public])
-                If color.PropertyType = GetType(System.Drawing.Color) Then
+            For Each color As PropertyInfo In GetType(Color).GetProperties(BindingFlags.[Static] Or BindingFlags.[Public])
+                If color.PropertyType = GetType(Color) Then
                     MyBase.Add(DirectCast(color.GetValue(Nothing, Nothing), Color))
                 End If
             Next

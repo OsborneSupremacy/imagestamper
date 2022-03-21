@@ -33,7 +33,7 @@ namespace ImageStamper.Service
             _coordinatesService = coordinatesService ?? throw new ArgumentNullException(nameof(coordinatesService));
         }
 
-        public Bitmap Process(
+        public Bitmap? Process(
             Bitmap bitmap,
             Color color,
             bool backGroundFill,
@@ -44,6 +44,7 @@ namespace ImageStamper.Service
             )
         {
             using var imgGrphx = _imageConverter.BitmapToGraphics(bitmap);
+            if (imgGrphx == null) return null;
 
             var imageSize = new SizeF(bitmap.Width, bitmap.Height);
 
