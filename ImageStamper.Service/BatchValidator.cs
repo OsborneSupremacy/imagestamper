@@ -21,7 +21,7 @@ namespace ImageStamper.Service
                     errors.Add(error);
             }
 
-            return (errors.Any(), errors);
+            return (!errors.Any(), errors);
         }
 
         public (bool isValid, string error) ValidateBitmap(FileInfo imageFile, DirectoryInfo outputDirectory)

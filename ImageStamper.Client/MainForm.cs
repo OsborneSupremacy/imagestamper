@@ -1,6 +1,7 @@
 ﻿using ImageStamper.Objects;
 using ImageStamper.Service;
 using Microsoft.Extensions.Options;
+using System.Diagnostics;
 using System.Text;
 
 namespace ImageStamper.Client
@@ -174,14 +175,16 @@ namespace ImageStamper.Client
 
         private void ExecuteButton_Click(object sender, EventArgs e)
         {
+            List<FileInfo> imageFiles = new();
+            foreach (string item in ToProcessListbox.Items)
+                imageFiles.Add(new FileInfo(item));
+
             var outputDirectory = new DirectoryInfo(OutputFolderTextbox.Text);
             if (!outputDirectory.Exists)
                 outputDirectory.Create();
 
             var combinedDateTime = DatePicker.Value.Date.Add(TimePicker.Value.TimeOfDay);
             var dateTimeFormatter = _dateTimeFormatterFactory.Create(DateFormatTextBox.Text, TimePicker.Checked, TimeFormatTextBox.Text);
-
-            var imageFiles = new List<FileInfo>();
 
             var (isValid, errors) = _batchValidator.Validate(imageFiles, outputDirectory);
 
@@ -197,18 +200,26 @@ namespace ImageStamper.Client
                 return;
             }
 
-            _batchProcessor.ProcessAsync(
-                imageFiles,
-                outputDirectory,
-                ColorTextBox.BackColor,
-                BackgroundFillCheckBox.Checked,
-                FontTextBox.Font,
-                UseExifCheckBox.Checked,
-                combinedDateTime,
-                dateTimeFormatter,
-                _position,
-                SizeTrackBar.Value
-            ).GetAwaiter().GetResult();
+            var size = SizeTrackBar.Value;
+
+            Action processor = () => {
+                _batchProcessor.ProcessAsync(
+                    imageFiles,
+                    outputDirectory,
+                    ColorTextBox.BackColor,
+                    BackgroundFillCheckBox.Checked,
+                    FontTextBox.Font,
+                    UseExifCheckBox.Checked,
+                    combinedDateTime,
+                    dateTimeFormatter,
+                    _position,
+                    size
+                ).GetAwaiter().GetResult();
+            };
+
+            RunSta(processor);
+
+            Process.Start("explorer.exe", outputDirectory.FullName);
         }
 
         private void FolderBrowseButton_Click(object sender, EventArgs e)
@@ -219,10 +230,21 @@ namespace ImageStamper.Client
                 return folderBrowserDialog1.SelectedPath;
             };
 
-            var result  = StaDialogRunner(dialogDelegate, string.Empty);
+            var result  = RunSta(dialogDelegate, string.Empty);
 
             if (string.IsNullOrWhiteSpace(result)) return;
             OutputFolderTextbox.Text = result;
+        }
+
+
+        private void RunSta(Action delegateAction)
+        {
+            Thread thread = new(() => {
+                delegateAction.Invoke();
+            });
+            thread.SetApartmentState(ApartmentState.STA);
+            thread.Start();
+            thread.Join();
         }
 
         /// <summary>
@@ -230,7 +252,7 @@ namespace ImageStamper.Client
         /// </summary>
         /// <param name="dialogDelegate"></param>
         /// <returns></returns>
-        private T StaDialogRunner<T>(Func<T> dialogDelegate, T defaultValue) 
+        private T RunSta<T>(Func<T> dialogDelegate, T defaultValue) 
         {
             T valueOut = defaultValue;
 
@@ -254,7 +276,7 @@ namespace ImageStamper.Client
                 return openFileDialog1.FileNames;
             };
 
-            var results = StaDialogRunner(dialogDelegate, Enumerable.Empty<string>().ToArray());
+            var results = RunSta(dialogDelegate, Enumerable.Empty<string>().ToArray());
             if(!results.Any()) return;
 
             foreach(var result in results)
@@ -270,7 +292,7 @@ namespace ImageStamper.Client
                 return folderBrowserDialog1.SelectedPath;
             };
 
-            var result = StaDialogRunner(dialogDelegate, string.Empty);
+            var result = RunSta(dialogDelegate, string.Empty);
             if (string.IsNullOrWhiteSpace(result)) return;
 
             foreach(var file in new DirectoryInfo(result).GetFiles().Select(x => x.FullName))
