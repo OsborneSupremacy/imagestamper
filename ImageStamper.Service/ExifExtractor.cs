@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace ImageStamper.Service
 {
@@ -14,7 +15,14 @@ namespace ImageStamper.Service
             using MemoryStream fileMs = new(fileBytes);
             using Image targetImage = Image.FromStream(fileMs);
 
-            var propItem = targetImage.GetPropertyItem(_imageDatePropId);
+            PropertyItem? propItem = null;
+
+            try
+            {
+                propItem = targetImage.GetPropertyItem(_imageDatePropId);
+            } catch (ArgumentException)
+            {
+            }
 
             if (propItem?.Value == null) return null;
 

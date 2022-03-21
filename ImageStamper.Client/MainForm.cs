@@ -236,7 +236,6 @@ namespace ImageStamper.Client
             OutputFolderTextbox.Text = result;
         }
 
-
         private void RunSta(Action delegateAction)
         {
             Thread thread = new(() => {
