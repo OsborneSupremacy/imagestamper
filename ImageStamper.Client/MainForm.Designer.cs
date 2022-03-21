@@ -69,6 +69,13 @@ namespace ImageStamper.Client
             this.NewTempFolderButton = new System.Windows.Forms.Button();
             this.FolderBrowseButton = new System.Windows.Forms.Button();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.ToProcessListbox = new System.Windows.Forms.ListBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.AddImagesButton = new System.Windows.Forms.Button();
+            this.AddFolderButton = new System.Windows.Forms.Button();
+            this.ClearSelectedButton = new System.Windows.Forms.Button();
+            this.ClearAllButton = new System.Windows.Forms.Button();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.SizeTrackBar)).BeginInit();
             this.PositionGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PreviewPictureBackGroundBox)).BeginInit();
@@ -453,12 +460,78 @@ namespace ImageStamper.Client
             this.folderBrowserDialog1.AutoUpgradeEnabled = false;
             this.folderBrowserDialog1.RootFolder = System.Environment.SpecialFolder.MyComputer;
             // 
+            // ToProcessListbox
+            // 
+            this.ToProcessListbox.FormattingEnabled = true;
+            this.ToProcessListbox.ItemHeight = 15;
+            this.ToProcessListbox.Location = new System.Drawing.Point(12, 27);
+            this.ToProcessListbox.Name = "ToProcessListbox";
+            this.ToProcessListbox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.ToProcessListbox.Size = new System.Drawing.Size(476, 199);
+            this.ToProcessListbox.TabIndex = 29;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(12, 9);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(102, 15);
+            this.label8.TabIndex = 30;
+            this.label8.Text = "Images to Process";
+            // 
+            // AddImagesButton
+            // 
+            this.AddImagesButton.Location = new System.Drawing.Point(12, 232);
+            this.AddImagesButton.Name = "AddImagesButton";
+            this.AddImagesButton.Size = new System.Drawing.Size(168, 23);
+            this.AddImagesButton.TabIndex = 31;
+            this.AddImagesButton.Text = "Add Images";
+            this.AddImagesButton.UseVisualStyleBackColor = true;
+            this.AddImagesButton.Click += new System.EventHandler(this.AddImagesButton_Click);
+            // 
+            // AddFolderButton
+            // 
+            this.AddFolderButton.Location = new System.Drawing.Point(12, 261);
+            this.AddFolderButton.Name = "AddFolderButton";
+            this.AddFolderButton.Size = new System.Drawing.Size(168, 23);
+            this.AddFolderButton.TabIndex = 32;
+            this.AddFolderButton.Text = "Add Folder";
+            this.AddFolderButton.UseVisualStyleBackColor = true;
+            this.AddFolderButton.Click += new System.EventHandler(this.AddFolderButton_Click);
+            // 
+            // ClearSelectedButton
+            // 
+            this.ClearSelectedButton.Location = new System.Drawing.Point(320, 232);
+            this.ClearSelectedButton.Name = "ClearSelectedButton";
+            this.ClearSelectedButton.Size = new System.Drawing.Size(168, 23);
+            this.ClearSelectedButton.TabIndex = 33;
+            this.ClearSelectedButton.Text = "Clear Selected";
+            this.ClearSelectedButton.UseVisualStyleBackColor = true;
+            // 
+            // ClearAllButton
+            // 
+            this.ClearAllButton.Location = new System.Drawing.Point(320, 261);
+            this.ClearAllButton.Name = "ClearAllButton";
+            this.ClearAllButton.Size = new System.Drawing.Size(168, 23);
+            this.ClearAllButton.TabIndex = 34;
+            this.ClearAllButton.Text = "Clear All";
+            this.ClearAllButton.UseVisualStyleBackColor = true;
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.Multiselect = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(891, 555);
+            this.Controls.Add(this.ClearAllButton);
+            this.Controls.Add(this.ClearSelectedButton);
+            this.Controls.Add(this.AddFolderButton);
+            this.Controls.Add(this.AddImagesButton);
+            this.Controls.Add(this.ToProcessListbox);
             this.Controls.Add(this.FolderBrowseButton);
             this.Controls.Add(this.NewTempFolderButton);
             this.Controls.Add(this.label7);
@@ -485,6 +558,7 @@ namespace ImageStamper.Client
             this.Controls.Add(this.ColorTextBox);
             this.Controls.Add(this.FontTextBox);
             this.Controls.Add(this.SelectFontButton);
+            this.Controls.Add(this.label8);
             this.Name = "MainForm";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "Image Stamper";
@@ -537,5 +611,12 @@ namespace ImageStamper.Client
         private Button NewTempFolderButton;
         private Button FolderBrowseButton;
         private FolderBrowserDialog folderBrowserDialog1;
+        private ListBox ToProcessListbox;
+        private Label label8;
+        private Button AddImagesButton;
+        private Button AddFolderButton;
+        private Button ClearSelectedButton;
+        private Button ClearAllButton;
+        private OpenFileDialog openFileDialog1;
     }
 }

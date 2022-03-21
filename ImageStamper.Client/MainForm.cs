@@ -178,10 +178,8 @@ namespace ImageStamper.Client
         private void FolderBrowseButton_Click(object sender, EventArgs e)
         {
             Func<string> dialogDelegate = () => {
-
                 if (!folderBrowserDialog1.ShowDialog().Equals(DialogResult.OK))
                     return string.Empty;
-
                 return folderBrowserDialog1.SelectedPath;
             };
 
@@ -210,5 +208,42 @@ namespace ImageStamper.Client
             return valueOut;
         }
 
+        private void AddImagesButton_Click(object sender, EventArgs e)
+        {
+            Func<string[]> dialogDelegate = () =>
+            {
+                if (!openFileDialog1.ShowDialog().Equals(DialogResult.OK))
+                    return Enumerable.Empty<string>().ToArray();
+
+                return openFileDialog1.FileNames;
+            };
+
+            var results = StaDialogRunner(dialogDelegate, Enumerable.Empty<string>().ToArray());
+            if(!results.Any()) return;
+
+            foreach(var result in results)
+            {
+                if (!ToProcessListbox.Items.Contains(result))
+                    ToProcessListbox.Items.Add(result);
+            }
+        }
+
+        private void AddFolderButton_Click(object sender, EventArgs e)
+        {
+            Func<string> dialogDelegate = () => {
+                if (!folderBrowserDialog1.ShowDialog().Equals(DialogResult.OK))
+                    return string.Empty;
+                return folderBrowserDialog1.SelectedPath;
+            };
+
+            var result = StaDialogRunner(dialogDelegate, string.Empty);
+            if (string.IsNullOrWhiteSpace(result)) return;
+
+            foreach(var file in new DirectoryInfo(result).GetFiles().Select(x => x.FullName))
+            {
+                if (!ToProcessListbox.Items.Contains(file))
+                    ToProcessListbox.Items.Add(file);
+            }
+        }
     }
 }
