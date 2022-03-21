@@ -20,7 +20,8 @@ namespace ImageStamper.Service
             try
             {
                 propItem = targetImage.GetPropertyItem(_imageDatePropId);
-            } catch (ArgumentException)
+            }
+            catch (ArgumentException)
             {
             }
 

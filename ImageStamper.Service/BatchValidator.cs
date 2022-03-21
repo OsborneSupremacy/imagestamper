@@ -12,7 +12,7 @@ namespace ImageStamper.Service
             var errors = new List<string>();
 
             if (!outputDirectory.Exists)
-                 errors.Add($"Output directory {outputDirectory.FullName} does not exist.");
+                errors.Add($"Output directory {outputDirectory.FullName} does not exist.");
 
             foreach (var imageFile in imageFiles)
             {
@@ -32,11 +32,11 @@ namespace ImageStamper.Service
             if (imageFile.Directory == outputDirectory)
                 return (false, $"{imageFile.FullName} is in the output directory. The output directory must not be the same as the input directory for any images.");
 
-            if(outputDirectory
+            if (outputDirectory
                 .GetFiles()
                 .Select(x => x.Name)
                 .Contains(imageFile.Name, StringComparer.OrdinalIgnoreCase))
-                    return (false, $"{imageFile.Name} already exists in the output directory.");
+                return (false, $"{imageFile.Name} already exists in the output directory.");
 
             try
             {
