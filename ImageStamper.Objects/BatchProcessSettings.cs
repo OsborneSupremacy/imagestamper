@@ -1,11 +1,8 @@
-﻿using ImageStamper.Objects;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
 
-namespace ImageStamper.Service
+namespace ImageStamper.Objects
 {
-    public class BatchProcessSettings
+    public record BatchProcessSettings
     {
         public BatchProcessSettings(
             IEnumerable<FileInfo> imageFiles,

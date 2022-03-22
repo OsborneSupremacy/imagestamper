@@ -155,22 +155,23 @@ namespace ImageStamper.Client
                 return;
             }
 
+            var settings = new BatchProcessSettings(
+                imageFiles,
+                outputDirectory,
+                ColorTextBox.BackColor,
+                BackgroundFillCheckBox.Checked,
+                FontTextBox.Font,
+                UseExifCheckBox.Checked,
+                combinedDateTime,
+                dateTimeFormatter,
+                _position,
+                SizeTrackBar.Value);
+
             var size = SizeTrackBar.Value;
 
             Action processor = () =>
             {
-                _batchProcessor.ProcessAsync(
-                    imageFiles,
-                    outputDirectory,
-                    ColorTextBox.BackColor,
-                    BackgroundFillCheckBox.Checked,
-                    FontTextBox.Font,
-                    UseExifCheckBox.Checked,
-                    combinedDateTime,
-                    dateTimeFormatter,
-                    _position,
-                    size
-                ).GetAwaiter().GetResult();
+                _batchProcessor.ProcessAsync(settings).GetAwaiter().GetResult();
             };
 
             StaExecutor.Execute(processor);

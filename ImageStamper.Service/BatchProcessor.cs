@@ -16,29 +16,18 @@ namespace ImageStamper.Service
             _exifExtractor = exifExtractor ?? throw new ArgumentNullException(nameof(exifExtractor));
         }
 
-        public async Task ProcessAsync(
-            IEnumerable<FileInfo> imageFiles,
-            DirectoryInfo outputDirectory,
-            Color color,
-            bool backGroundFill,
-            Font font,
-            bool useExif,
-            DateTime defaultDateTime,
-            Func<DateTime, string> dateTimeFormatter,
-            PositionConstants position,
-            int percentOfImage
-            )
+        public async Task ProcessAsync(BatchProcessSettings settings)
         {
-            foreach (var imageFile in imageFiles)
+            foreach (var imageFile in settings.ImageFiles)
             {
                 using var bitmap = new Bitmap(imageFile.FullName);
-                var text = await GetStampTextAsync(imageFile, useExif, defaultDateTime, dateTimeFormatter);
-                using var newBitmap = _processor.Process(bitmap, color, backGroundFill, font, text, position, percentOfImage);
+                var text = await GetStampTextAsync(imageFile, settings.UseExif, settings.DefaultDateTime, settings.DateTimeFormatter);
+                using var newBitmap = _processor.Process(bitmap, settings.Color, settings.BackGroundFill, settings.Font, text, settings.Position, settings.PercentOfImage);
 
                 if (newBitmap == null)
                     continue;
 
-                newBitmap.Save(Path.Combine(outputDirectory.FullName, imageFile.Name), ImageFormat.Jpeg);
+                newBitmap.Save(Path.Combine(settings.OutputDirectory.FullName, imageFile.Name), ImageFormat.Jpeg);
             }
         }
 

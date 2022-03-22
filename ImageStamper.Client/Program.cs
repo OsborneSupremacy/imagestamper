@@ -31,11 +31,6 @@ namespace ImageStamper.Client
                         services.AddSingleton(x);
                     });
 
-                    typeof(BatchProcessSettingsFactory).GetTypesInAssembly().ForEach(x =>
-                    {
-                        services.AddSingleton(x);
-                    });
-
                     services.AddSingleton<MainForm>();
                 })
                 .RunConsoleAsync();
