@@ -68,6 +68,12 @@ namespace ImageStamper.Client.Service
             return items;
         }
 
+        public static List<FileInfo> GetFiles(this ListBox input) => 
+            input
+                .GetItems<string>()
+                .Select(x => new FileInfo(x))
+                .ToList();
+
         public static List<T> GetSelectedItems<T>(this ListBox input)
         {
             List<T> items = new();

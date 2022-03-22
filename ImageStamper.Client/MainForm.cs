@@ -3,8 +3,6 @@ using ImageStamper.Objects;
 using ImageStamper.Service;
 using ImageStamper.Utility;
 using Microsoft.Extensions.Options;
-using System.Diagnostics;
-using System.Text;
 
 namespace ImageStamper.Client
 {
@@ -132,21 +130,18 @@ namespace ImageStamper.Client
 
         private void ExecuteButton_Click(object sender, EventArgs e)
         {
-            var imageFiles = ToProcessListbox
-                .GetItems<string>()
-                .Select(x => new FileInfo(x)).ToList();
+            var imageFiles = ToProcessListbox.GetFiles();
 
             var outputDirectory = ClientFunctions.GetOrCreateDirectory(OutputFolderTextbox.Text);
 
-            var (combinedDateTime, dateTimeFormatter) = GetDateTimeObjects();
-
             var (isValid, errors) = _batchValidator.Validate(imageFiles, outputDirectory);
-
             if (!isValid)
             {
                 ClientFunctions.ComposeAndDisplayInvalidMessage(errors);
                 return;
             }
+
+            var (combinedDateTime, dateTimeFormatter) = GetDateTimeObjects();
 
             var settings = new BatchProcessSettings(
                 imageFiles,
