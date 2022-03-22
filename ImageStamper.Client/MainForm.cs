@@ -1,5 +1,6 @@
 ﻿using ImageStamper.Objects;
 using ImageStamper.Service;
+using ImageStamper.Utility;
 using Microsoft.Extensions.Options;
 using System.Diagnostics;
 using System.Text;
@@ -62,21 +63,9 @@ namespace ImageStamper.Client
         {
             StringBuilder s = new();
             s.Append("Supported Image Files(");
-
-            _settings
-                .SupportedImageTypes
-                .Aggregate(s,
-                    (cumulative, add) => cumulative.Append($"*{add}, "), final => final.ToString().Trim()
-                );
-
+            s.Append(_supportedImageTypes.ToPunctuatedString("*", ", "));
             s.Append(") | ");
-
-            _settings
-                .SupportedImageTypes
-                .Aggregate(s,
-                    (cumulative, add) => cumulative.Append($"*{add}; "), final => final.ToString().Trim()
-                );
-
+            s.Append(_supportedImageTypes.ToPunctuatedString("*", "; "));
             return s.ToString();
         }
 
@@ -117,15 +106,14 @@ namespace ImageStamper.Client
             var button = (RadioButton)sender;
             if (!button.Checked) return;
 
+            _position = (PositionConstants)Enum.Parse(typeof(PositionConstants), removeSuffix(button.Name), true);
+
             // button name contains word "Button". Remove it to get text corresponding
             // to PositionConstants values.
-            var positionName = button.Name.Replace(nameof(Button), string.Empty);
-
-            _position = (PositionConstants)Enum.Parse(typeof(PositionConstants), positionName, true);
+            static string removeSuffix(string input) => input.Replace(nameof(Button), string.Empty);
         }
 
-        private void RefreshPreviewButton_Click(object sender, EventArgs e) =>
-            RefreshPreview();
+        private void RefreshPreviewButton_Click(object sender, EventArgs e) => RefreshPreview();
 
         private void RefreshPreview()
         {
@@ -219,7 +207,7 @@ namespace ImageStamper.Client
                 ).GetAwaiter().GetResult();
             };
 
-            RunSta(processor);
+            StaExecutor.Execute(processor);
 
             Process.Start("explorer.exe", outputDirectory.FullName);
         }
@@ -233,41 +221,10 @@ namespace ImageStamper.Client
                 return folderBrowserDialog1.SelectedPath;
             };
 
-            var result = RunSta(dialogDelegate, string.Empty);
+            var result = StaExecutor.Execute(dialogDelegate, string.Empty);
 
             if (string.IsNullOrWhiteSpace(result)) return;
             OutputFolderTextbox.Text = result;
-        }
-
-        private void RunSta(Action delegateAction)
-        {
-            Thread thread = new(() =>
-            {
-                delegateAction.Invoke();
-            });
-            thread.SetApartmentState(ApartmentState.STA);
-            thread.Start();
-            thread.Join();
-        }
-
-        /// <summary>
-        /// Some dialogs needs to be accessed in STA threads. This should be used for those.
-        /// </summary>
-        /// <param name="dialogDelegate"></param>
-        /// <returns></returns>
-        private T RunSta<T>(Func<T> dialogDelegate, T defaultValue)
-        {
-            T valueOut = defaultValue;
-
-            Thread thread = new(() =>
-            {
-                valueOut = dialogDelegate.Invoke();
-            });
-            thread.SetApartmentState(ApartmentState.STA);
-            thread.Start();
-            thread.Join();
-
-            return valueOut;
         }
 
         private void AddImagesButton_Click(object sender, EventArgs e)
@@ -280,7 +237,7 @@ namespace ImageStamper.Client
                 return openFileDialog1.FileNames;
             };
 
-            var results = RunSta(dialogDelegate, Enumerable.Empty<string>().ToArray());
+            var results = StaExecutor.Execute(dialogDelegate, Enumerable.Empty<string>().ToArray());
             if (!results.Any()) return;
 
             foreach (var result in results)
@@ -297,7 +254,7 @@ namespace ImageStamper.Client
                 return folderBrowserDialog1.SelectedPath;
             };
 
-            var result = RunSta(dialogDelegate, string.Empty);
+            var result = StaExecutor.Execute(dialogDelegate, string.Empty);
             if (string.IsNullOrWhiteSpace(result)) return;
 
             foreach (var file in new DirectoryInfo(result).GetFiles().Select(x => x.FullName))

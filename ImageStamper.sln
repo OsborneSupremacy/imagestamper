@@ -18,7 +18,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageStamper.Client", "ImageStamper.Client\ImageStamper.Client.csproj", "{73BB12AE-9E41-4111-8ECF-53C5442058B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageStamper.Client", "ImageStamper.Client\ImageStamper.Client.csproj", "{73BB12AE-9E41-4111-8ECF-53C5442058B1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageStamper.Client.Service", "ImageStamper.Client.Service\ImageStamper.Client.Service.csproj", "{3CED91AA-23E6-49BC-B75A-A8B8F1837E02}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -46,6 +48,10 @@ Global
 		{73BB12AE-9E41-4111-8ECF-53C5442058B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{73BB12AE-9E41-4111-8ECF-53C5442058B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{73BB12AE-9E41-4111-8ECF-53C5442058B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3CED91AA-23E6-49BC-B75A-A8B8F1837E02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3CED91AA-23E6-49BC-B75A-A8B8F1837E02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3CED91AA-23E6-49BC-B75A-A8B8F1837E02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3CED91AA-23E6-49BC-B75A-A8B8F1837E02}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

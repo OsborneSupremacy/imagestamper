@@ -1,8 +1,10 @@
+using ImageStamper.Client.Service;
 using ImageStamper.Service;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Reflection;
+using ImageStamper.Utility;
 
 namespace ImageStamper.Client
 {
@@ -24,15 +26,15 @@ namespace ImageStamper.Client
                         .Bind(configuration.GetSection("Settings"))
                         .ValidateDataAnnotations();
 
-                    Assembly.GetAssembly(typeof(Processor))!
-                        .GetTypes()
-                        .Where(x => !x.IsAbstract)
-                        .Where(x => x.IsPublic)
-                        .ToList()
-                        .ForEach(x =>
-                        {
-                            services.AddSingleton(x);
-                        });
+                    typeof(Processor).GetTypesInAssembly().ForEach(x =>
+                    {
+                        services.AddSingleton(x);
+                    });
+
+                    typeof(BatchProcessSettingsFactory).GetTypesInAssembly().ForEach(x =>
+                    {
+                        services.AddSingleton(x);
+                    });
 
                     services.AddSingleton<MainForm>();
                 })

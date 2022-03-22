@@ -30,7 +30,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ImageStamper.Client.Service\ImageStamper.Client.Service.csproj" />
     <ProjectReference Include="..\ImageStamper.Service\ImageStamper.Service.csproj" />
+    <ProjectReference Include="..\ImageStamper.Utility\ImageStamper.Utility.csproj" />
   </ItemGroup>
 
   <ItemGroup>
