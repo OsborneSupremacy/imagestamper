@@ -169,66 +169,31 @@ namespace ImageStamper.Client
 
             var size = SizeTrackBar.Value;
 
-            Action processor = () =>
+            StaExecutor.Execute(() =>
             {
                 _batchProcessor.ProcessAsync(settings).GetAwaiter().GetResult();
-            };
+            });
 
-            StaExecutor.Execute(processor);
-
-            Process.Start("explorer.exe", outputDirectory.FullName);
+            ClientFunctions.OpenInExplorer(outputDirectory.FullName);
         }
 
         private void FolderBrowseButton_Click(object sender, EventArgs e)
         {
-            Func<string> dialogDelegate = () =>
-            {
-                if (!folderBrowserDialog1.ShowDialog().Ok())
-                    return string.Empty;
-                return folderBrowserDialog1.SelectedPath;
-            };
-
-            var result = StaExecutor.Execute(dialogDelegate, string.Empty);
+            var result = folderBrowserDialog1.GetDirectory();
 
             if (string.IsNullOrWhiteSpace(result)) return;
             OutputFolderTextbox.Text = result;
         }
 
-        private void AddImagesButton_Click(object sender, EventArgs e)
-        {
-            Func<string[]> dialogDelegate = () =>
-            {
-                if (!openFileDialog1.ShowDialog().Ok())
-                    return Enumerable.Empty<string>().ToArray();
+        private void AddImagesButton_Click(object sender, EventArgs e) => 
+            ToProcessListbox.AddRangeNewOnly(
+                openFileDialog1.GetSelectedFiles()
+            );
 
-                return openFileDialog1.FileNames;
-            };
-
-            var results = StaExecutor.Execute(dialogDelegate, Enumerable.Empty<string>().ToArray());
-            if (!results.Any()) return;
-
-            foreach (var result in results)
-                if (!ToProcessListbox.Items.Contains(result))
-                    ToProcessListbox.Items.Add(result);
-        }
-
-        private void AddFolderButton_Click(object sender, EventArgs e)
-        {
-            Func<string> dialogDelegate = () =>
-            {
-                if (!folderBrowserDialog1.ShowDialog().Ok())
-                    return string.Empty;
-                return folderBrowserDialog1.SelectedPath;
-            };
-
-            var result = StaExecutor.Execute(dialogDelegate, string.Empty);
-            if (string.IsNullOrWhiteSpace(result)) return;
-
-            foreach (var file in new DirectoryInfo(result).GetFiles().Select(x => x.FullName))
-                if (!ToProcessListbox.Items.Contains(file)
-                    && _supportedImageTypes.Contains(new FileInfo(file).Extension, StringComparer.OrdinalIgnoreCase))
-                    ToProcessListbox.Items.Add(file);
-        }
+        private void AddFolderButton_Click(object sender, EventArgs e) => 
+            ToProcessListbox.AddRangeNewOnly(
+                folderBrowserDialog1.GetFiles(_supportedImageTypes)
+            );
 
         private void ClearAllButton_Click(object sender, EventArgs e) =>
             ToProcessListbox.Items.Clear();
