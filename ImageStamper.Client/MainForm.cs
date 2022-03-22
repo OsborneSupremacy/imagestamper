@@ -1,7 +1,6 @@
 ﻿using ImageStamper.Client.Service;
 using ImageStamper.Objects;
 using ImageStamper.Service;
-using ImageStamper.Utility;
 using Microsoft.Extensions.Options;
 
 namespace ImageStamper.Client
@@ -131,7 +130,6 @@ namespace ImageStamper.Client
         private void ExecuteButton_Click(object sender, EventArgs e)
         {
             var imageFiles = ToProcessListbox.GetFiles();
-
             var outputDirectory = ClientFunctions.GetOrCreateDirectory(OutputFolderTextbox.Text);
 
             var (isValid, errors) = _batchValidator.Validate(imageFiles, outputDirectory);
@@ -155,11 +153,7 @@ namespace ImageStamper.Client
                 _position,
                 SizeTrackBar.Value);
 
-            StaExecutor.Execute(() =>
-            {
-                _batchProcessor.ProcessAsync(settings).GetAwaiter().GetResult();
-            });
-
+            ClientFunctions.ExecuteBatchProcess(_batchProcessor, settings);
             ClientFunctions.OpenInExplorer(outputDirectory.FullName);
         }
 

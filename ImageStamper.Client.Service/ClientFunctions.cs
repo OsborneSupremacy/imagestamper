@@ -1,4 +1,5 @@
 ﻿using ImageStamper.Objects;
+using ImageStamper.Service;
 using ImageStamper.Utility;
 using System.Diagnostics;
 using System.Text;
@@ -66,5 +67,11 @@ Please correct the following problems:
             MessageBox.Show(msg.ToString(), "Problems", MessageBoxButtons.OK);
             return;
         }
+
+        public static void ExecuteBatchProcess(BatchProcessor batchProcessor, BatchProcessSettings settings) => 
+            StaExecutor.Execute(() =>
+            {
+                batchProcessor.ProcessAsync(settings).GetAwaiter().GetResult();
+            });
     }
 }
