@@ -55,5 +55,16 @@ namespace ImageStamper.Client.Service
 
         public static void OpenInExplorer(string path) =>
             Process.Start("explorer", path);
+
+        public static void ComposeAndDisplayInvalidMessage(List<string> errors)
+        {
+            var msg = $@"
+Please correct the following problems:
+
+{errors.ToPunctuatedString("• ", Environment.NewLine)}";
+
+            MessageBox.Show(msg.ToString(), "Problems", MessageBoxButtons.OK);
+            return;
+        }
     }
 }

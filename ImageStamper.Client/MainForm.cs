@@ -144,14 +144,7 @@ namespace ImageStamper.Client
 
             if (!isValid)
             {
-                StringBuilder msg = new(@"Please correct the following problems:
-
-");
-                errors.ForEach((error) =>
-                {
-                    msg.AppendLine($"• {error}");
-                });
-                MessageBox.Show(msg.ToString(), "Problems", MessageBoxButtons.OK);
+                ClientFunctions.ComposeAndDisplayInvalidMessage(errors);
                 return;
             }
 
@@ -166,8 +159,6 @@ namespace ImageStamper.Client
                 dateTimeFormatter,
                 _position,
                 SizeTrackBar.Value);
-
-            var size = SizeTrackBar.Value;
 
             StaExecutor.Execute(() =>
             {
@@ -185,12 +176,12 @@ namespace ImageStamper.Client
             OutputFolderTextbox.Text = result;
         }
 
-        private void AddImagesButton_Click(object sender, EventArgs e) => 
+        private void AddImagesButton_Click(object sender, EventArgs e) =>
             ToProcessListbox.AddRangeNewOnly(
                 openFileDialog1.GetSelectedFiles()
             );
 
-        private void AddFolderButton_Click(object sender, EventArgs e) => 
+        private void AddFolderButton_Click(object sender, EventArgs e) =>
             ToProcessListbox.AddRangeNewOnly(
                 folderBrowserDialog1.GetFiles(_supportedImageTypes)
             );
