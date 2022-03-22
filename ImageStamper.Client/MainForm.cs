@@ -1,4 +1,5 @@
-﻿using ImageStamper.Objects;
+﻿using ImageStamper.Client.Service;
+using ImageStamper.Objects;
 using ImageStamper.Service;
 using ImageStamper.Utility;
 using Microsoft.Extensions.Options;
@@ -42,7 +43,7 @@ namespace ImageStamper.Client
 
             SetFont(FontTextBox.Font); // doing this so that the displayed name is consistent with the font
             SetSizeText();
-            SetInitialFolder();
+            ClientFunctions.CreateAndGetInitialFolder();
             SetTempFolder();
 
             RefreshPreview();
@@ -50,23 +51,7 @@ namespace ImageStamper.Client
 
         private void Main_Load(object sender, EventArgs e)
         {
-            this.openFileDialog1.Filter = ComposeFileDialogFilter();
-        }
-
-        /// <summary>
-        /// Composes a filter string like this:
-        /// 
-        /// Supported Image Files(*.bmp, *.jpg, *.jpeg, *.gif, *.png) | *.bmp; *.jpg; *.jpeg; *.gif; *.png
-        /// </summary>
-        /// <returns></returns>
-        private string ComposeFileDialogFilter()
-        {
-            StringBuilder s = new();
-            s.Append("Supported Image Files(");
-            s.Append(_supportedImageTypes.ToPunctuatedString("*", ", "));
-            s.Append(") | ");
-            s.Append(_supportedImageTypes.ToPunctuatedString("*", "; "));
-            return s.ToString();
+            this.openFileDialog1.Filter = ClientFunctions.ComposeFileDialogFilter(_supportedImageTypes);
         }
 
         private void SelectFontButton_Click(object sender, EventArgs e)
@@ -106,19 +91,14 @@ namespace ImageStamper.Client
             var button = (RadioButton)sender;
             if (!button.Checked) return;
 
-            _position = (PositionConstants)Enum.Parse(typeof(PositionConstants), removeSuffix(button.Name), true);
-
-            // button name contains word "Button". Remove it to get text corresponding
-            // to PositionConstants values.
-            static string removeSuffix(string input) => input.Replace(nameof(Button), string.Empty);
+            _position = ClientFunctions.GetPositionFromName(button.Name);
         }
 
         private void RefreshPreviewButton_Click(object sender, EventArgs e) => RefreshPreview();
 
         private void RefreshPreview()
         {
-            var combinedDateTime = DatePicker.Value.Date.Add(TimePicker.Value.TimeOfDay);
-            var dateTimeFormatter = _dateTimeFormatterFactory.Create(DateFormatTextBox.Text, TimePicker.Checked, TimeFormatTextBox.Text);
+            var (combinedDateTime, dateTimeFormatter) = GetDateTimeObjects();
 
             Bitmap preview = _processor
                 .Process(
@@ -138,18 +118,7 @@ namespace ImageStamper.Client
         private void NewTempFolderButton_Click(object sender, EventArgs e) => SetTempFolder();
 
         private void SetTempFolder() =>
-            this.OutputFolderTextbox.Text = GetTempFolderName();
-
-        private string GetTempFolderName() =>
-            Path.Combine(Path.GetTempPath(), nameof(ImageStamper), DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss"));
-
-        private void SetInitialFolder()
-        {
-            var appDirectory = new DirectoryInfo(Path.Combine(Path.GetTempPath(), nameof(ImageStamper)));
-            if (!appDirectory.Exists)
-                appDirectory.Create();
-            this.folderBrowserDialog1.InitialDirectory = appDirectory.FullName;
-        }
+            this.OutputFolderTextbox.Text = ClientFunctions.GetTempFolderName();
 
         private void BackgroundFillCheckBox_CheckedChanged(object sender, EventArgs e) => RefreshPreview();
 
@@ -163,16 +132,13 @@ namespace ImageStamper.Client
 
         private void ExecuteButton_Click(object sender, EventArgs e)
         {
-            List<FileInfo> imageFiles = new();
-            foreach (string item in ToProcessListbox.Items)
-                imageFiles.Add(new FileInfo(item));
+            var imageFiles = ToProcessListbox
+                .GetItems<string>()
+                .Select(x => new FileInfo(x)).ToList();
 
-            var outputDirectory = new DirectoryInfo(OutputFolderTextbox.Text);
-            if (!outputDirectory.Exists)
-                outputDirectory.Create();
+            var outputDirectory = ClientFunctions.GetOrCreateDirectory(OutputFolderTextbox.Text);
 
-            var combinedDateTime = DatePicker.Value.Date.Add(TimePicker.Value.TimeOfDay);
-            var dateTimeFormatter = _dateTimeFormatterFactory.Create(DateFormatTextBox.Text, TimePicker.Checked, TimeFormatTextBox.Text);
+            var (combinedDateTime, dateTimeFormatter) = GetDateTimeObjects();
 
             var (isValid, errors) = _batchValidator.Validate(imageFiles, outputDirectory);
 
@@ -216,7 +182,7 @@ namespace ImageStamper.Client
         {
             Func<string> dialogDelegate = () =>
             {
-                if (!folderBrowserDialog1.ShowDialog().Equals(DialogResult.OK))
+                if (!folderBrowserDialog1.ShowDialog().Ok())
                     return string.Empty;
                 return folderBrowserDialog1.SelectedPath;
             };
@@ -231,7 +197,7 @@ namespace ImageStamper.Client
         {
             Func<string[]> dialogDelegate = () =>
             {
-                if (!openFileDialog1.ShowDialog().Equals(DialogResult.OK))
+                if (!openFileDialog1.ShowDialog().Ok())
                     return Enumerable.Empty<string>().ToArray();
 
                 return openFileDialog1.FileNames;
@@ -249,7 +215,7 @@ namespace ImageStamper.Client
         {
             Func<string> dialogDelegate = () =>
             {
-                if (!folderBrowserDialog1.ShowDialog().Equals(DialogResult.OK))
+                if (!folderBrowserDialog1.ShowDialog().Ok())
                     return string.Empty;
                 return folderBrowserDialog1.SelectedPath;
             };
@@ -266,16 +232,13 @@ namespace ImageStamper.Client
         private void ClearAllButton_Click(object sender, EventArgs e) =>
             ToProcessListbox.Items.Clear();
 
-        private void ClearSelectedButton_Click(object sender, EventArgs e)
-        {
-            var selectedItems = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        private void ClearSelectedButton_Click(object sender, EventArgs e) =>
+            ToProcessListbox.RemoveSelectedItems();
 
-            foreach (var selectedItem in ToProcessListbox.SelectedItems)
-                selectedItems.Add(selectedItem.ToString()!);
-
-            for (int i = ToProcessListbox.Items.Count - 1; i >= 0; i--)
-                if (selectedItems.Contains(ToProcessListbox.Items[i]))
-                    ToProcessListbox.Items.RemoveAt(i);
-        }
+        private (DateTime combinedDateTime, Func<DateTime, string> dateTimeFormatter) GetDateTimeObjects() =>
+            (
+                DatePicker.Value.Date.Add(TimePicker.Value.TimeOfDay),
+                _dateTimeFormatterFactory.Create(DateFormatTextBox.Text, TimePicker.Checked, TimeFormatTextBox.Text)
+            );
     }
 }

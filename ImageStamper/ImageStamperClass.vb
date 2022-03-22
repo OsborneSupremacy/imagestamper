@@ -172,13 +172,13 @@ Public Class ImageStamperClass
 
         Dim result As Date = #12:00:00 AM#
 
-        Using imgFile As FileStream = New FileStream(TheImagePath, FileMode.Open, FileAccess.Read, FileShare.Read)
+        Using imgFile As New FileStream(TheImagePath, FileMode.Open, FileAccess.Read, FileShare.Read)
 
             Dim fileBytes(imgFile.Length) As Byte
             imgFile.Read(fileBytes, 0, fileBytes.Length)
             imgFile.Close()
 
-            Using fileMs As MemoryStream = New MemoryStream(fileBytes)
+            Using fileMs As New MemoryStream(fileBytes)
                 Using targetImg As Image = Image.FromStream(fileMs)
 
                     Dim propItem As PropertyItem
@@ -232,21 +232,6 @@ Public Class ImageStamperClass
         Return TheSolidBrush
 
     End Function
-
-    Public Class ColorList
-
-        Inherits List(Of Color)
-
-        Public Sub New()
-            MyBase.New()
-            For Each color As PropertyInfo In GetType(Color).GetProperties(BindingFlags.[Static] Or BindingFlags.[Public])
-                If color.PropertyType = GetType(Color) Then
-                    MyBase.Add(DirectCast(color.GetValue(Nothing, Nothing), Color))
-                End If
-            Next
-        End Sub
-
-    End Class
 
 End Class
 

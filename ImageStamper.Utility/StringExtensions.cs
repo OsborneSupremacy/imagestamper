@@ -3,6 +3,6 @@
     public static class StringExtensions
     {
         public static FileInfo GetFileInfo(this string input) =>
-            new FileInfo(input);
+            new(input);
     }
 }

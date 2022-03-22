@@ -2,7 +2,7 @@
 Public Class Form1
 
     Protected TheDefaultColor As Color = Color.Yellow
-    Protected TheDefaultFont As Font = New Font("Arial Narrow", 12)
+    Protected TheDefaultFont As New Font("Arial Narrow", 12)
 
     Private Function TempFolderName() As String
         Return Path.Combine(Path.GetTempPath, My.Application.Info.AssemblyName, Now.ToString("yyyy-MM-dd_HHmm-ssff"))
@@ -38,12 +38,10 @@ Public Class Form1
         End If
 
         If Not Directory.Exists(OutputFolder) Then Directory.CreateDirectory(OutputFolder)
-
-        Dim fi As FileInfo = Nothing
         Dim x As Integer = 0
 
         While x < Me.ToProcessList.Items.Count
-            fi = New FileInfo(Me.ToProcessList.Items(x))
+            Dim fi As New FileInfo(Me.ToProcessList.Items(x))
             ImageStamperClass.ProcessImageAndSave(fi.FullName, String.Format("{0}\{1}", OutputFolder, fi.Name), GetDateStampString, DateFormat, Me.FontTextBox.Text, Me.ColorTextBox.Text, Me.StampSizeInput.Value / 100.0, Me.UsedExifDateCheckBox.Checked, StampPosition, Me.BackgroundFillCheckBox.Checked)
             x += 1
         End While
@@ -156,11 +154,9 @@ Public Class Form1
 
         Dim result As ImageStamperClass.StampPositionConstants = ImageStamperClass.StampPositionConstants.LowerRight
 
-        Dim PosName As String = String.Empty
-
         For Each cb As RadioButton In StampPositionGroupBox.Controls
             If cb.Checked Then
-                PosName = cb.Name.Substring(0, cb.Name.ToLower.IndexOf("radiobutton"))
+                Dim PosName As String = cb.Name.Substring(0, cb.Name.ToLower.IndexOf("radiobutton"))
                 result = System.Enum.Parse(GetType(ImageStamperClass.StampPositionConstants), PosName, True)
                 Exit For
             End If
@@ -201,7 +197,7 @@ Public Class Form1
     ''' <remarks></remarks>
     Private Function GetDateToStamp() As DateTime
 
-        Dim DateToStamp As DateTime = New Date(Me.DateToStampDatePicker.Value.Year, Me.DateToStampDatePicker.Value.Month, Me.DateToStampDatePicker.Value.Day)
+        Dim DateToStamp As New Date(Me.DateToStampDatePicker.Value.Year, Me.DateToStampDatePicker.Value.Month, Me.DateToStampDatePicker.Value.Day)
         If Me.TimeToStampDatePicker.Checked Then
             DateToStamp += TimeToStampDatePicker.Value.TimeOfDay
         End If
