@@ -1,5 +1,6 @@
 ﻿using ImageStamper.Objects;
 using ImageStamper.Utility;
+using System.Diagnostics;
 using System.Text;
 
 namespace ImageStamper.Client.Service
@@ -51,5 +52,8 @@ namespace ImageStamper.Client.Service
             // to PositionConstants values.
             static string removeSuffix(string input) => input.Replace("button", string.Empty, StringComparison.OrdinalIgnoreCase);
         }
+
+        public static void OpenInExplorer(string path) =>
+            Process.Start("explorer", path);
     }
 }
