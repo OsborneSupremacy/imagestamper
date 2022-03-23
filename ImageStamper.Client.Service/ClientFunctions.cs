@@ -35,15 +35,8 @@ namespace ImageStamper.Client.Service
         /// Supported Image Files(*.bmp, *.jpg, *.jpeg, *.gif, *.png) | *.bmp; *.jpg; *.jpeg; *.gif; *.png
         /// </summary>
         /// <returns></returns>
-        public static string ComposeFileDialogFilter(IEnumerable<string> supportedImageTypes)
-        {
-            StringBuilder s = new();
-            s.Append("Supported Image Files(");
-            s.Append(supportedImageTypes.ToPunctuatedString("*", ", "));
-            s.Append(") | ");
-            s.Append(supportedImageTypes.ToPunctuatedString("*", "; "));
-            return s.ToString();
-        }
+        public static string ComposeFileDialogFilter(IEnumerable<string> types) =>
+            $@"Supported Image Files({types.ToPunctuatedString("*", ", ")}) | {types.ToPunctuatedString("*", "; ")}";
 
         public static PositionConstants GetPositionFromName(string buttonName)
         {
