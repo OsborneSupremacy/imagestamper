@@ -53,7 +53,7 @@ namespace ImageStamper.Client
 
         private void SelectFontButton_Click(object sender, EventArgs e)
         {
-            if (!fontDialog1.ShowDialog().Equals(DialogResult.OK)) return;
+            if (!fontDialog1.IsResponseOk()) return;
             SetFont(fontDialog1.Font);
             RefreshPreview();
         }
@@ -66,7 +66,7 @@ namespace ImageStamper.Client
 
         private void SelectColorButton_Click(object sender, EventArgs e)
         {
-            if (!colorDialog1.ShowDialog().Equals(DialogResult.OK)) return;
+            if (!colorDialog1.IsResponseOk()) return;
             SetColor(colorDialog1.Color);
             RefreshPreview();
         }
@@ -159,9 +159,7 @@ namespace ImageStamper.Client
 
         private void FolderBrowseButton_Click(object sender, EventArgs e)
         {
-            var result = folderBrowserDialog1.GetDirectory();
-
-            if (string.IsNullOrWhiteSpace(result)) return;
+            if (!folderBrowserDialog1.TryGetDirectoryName(out var result)) return;
             OutputFolderTextbox.Text = result;
         }
 

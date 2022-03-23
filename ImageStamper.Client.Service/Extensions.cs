@@ -4,30 +4,35 @@ namespace ImageStamper.Client.Service
 {
     public static class Extensions
     {
-        public static bool TryGetOkResponse(this CommonDialog input) => input.ShowDialog().Equals(DialogResult.OK);
+        public static bool IsResponseOk(this CommonDialog input) => input.ShowDialog().Equals(DialogResult.OK);
+
+        private static readonly List<string> _emptyStringList = Enumerable.Empty<string>().ToList();
 
         public static List<string> GetSelectedFiles(this FileDialog input)
         {
             Func<List<string>> dialogDelegate = () =>
             {
-                if (!input.TryGetOkResponse())
-                    return Enumerable.Empty<string>().ToList();
+                if (!input.IsResponseOk())
+                    return _emptyStringList;
                 return input.FileNames.ToList();
             };
 
-            return StaExecutor.Execute(dialogDelegate, Enumerable.Empty<string>().ToList());
+            return StaExecutor.Execute(dialogDelegate, _emptyStringList);
         }
 
-        public static string? GetDirectory(this FolderBrowserDialog input)
+        public static bool TryGetDirectoryName(this FolderBrowserDialog input, out string directoryName)
         {
+            directoryName = string.Empty;
+
             Func<string?> dialogDelegate = () =>
             {
-                if (!input.TryGetOkResponse())
+                if (!input.IsResponseOk())
                     return null;
                 return input.SelectedPath;
             };
 
-            return StaExecutor.Execute(dialogDelegate, null);
+            directoryName = StaExecutor.Execute(dialogDelegate, string.Empty) ?? string.Empty;
+            return string.IsNullOrWhiteSpace(directoryName);
         }
 
         public static List<string> GetFiles(
@@ -37,13 +42,13 @@ namespace ImageStamper.Client.Service
         {
             Func<string> dialogDelegate = () =>
             {
-                if (!input.TryGetOkResponse())
+                if (!input.IsResponseOk())
                     return string.Empty;
                 return input.SelectedPath;
             };
 
             var result = StaExecutor.Execute(dialogDelegate, string.Empty);
-            if (string.IsNullOrWhiteSpace(result)) return Enumerable.Empty<string>().ToList();
+            if (string.IsNullOrWhiteSpace(result)) return _emptyStringList;
 
             return new DirectoryInfo(result)
                 .GetFiles()
