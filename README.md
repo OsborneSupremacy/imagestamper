@@ -11,3 +11,16 @@ The purpose of this program is to simulate burned-in date/timestamps in photos. 
 Admittedly, there doesn't seem to be a lot of demand to do this. But since burned-in timestamps isn't an option in the default phone camera apps I've used, it's possible that this could come in handy for someone.
 
 It's currently a Windows-only app that doesn't support that many image types. I'm first going to upgrade it to a .NET 6 Windows application. Then, if I feel like it, I will try to to make it cross platform, once .NET MAUI is out of preview.
+
+## ImageStamper .vbproj
+
+This is the original, self-contained project created with Visual Basic / .NET Framework. Keeping it around, for now, for reference / nostalgia.
+
+It works, so you can set it as the startup project and use this version.
+
+## ImageStamper.Client
+
+This is the current C# / NET 6 version. Still depends on Windows Forms and therefore not cross-platform.
+
+Set this as the startup project to use this version.
+
