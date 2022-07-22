@@ -1,42 +1,43 @@
 ﻿using Microsoft.Extensions.Hosting;
 
-namespace ImageStamper.Client;
-
-public class ConsoleHostedService : IHostedService
+namespace ImageStamper.Client
 {
-    private readonly IHostApplicationLifetime _applicationLifetime;
-
-    private readonly MainForm _mainForm;
-
-    public ConsoleHostedService(
-        IHostApplicationLifetime applicationLifetime,
-        MainForm mainForm)
+    public class ConsoleHostedService : IHostedService
     {
-        _applicationLifetime = applicationLifetime ?? throw new ArgumentNullException(nameof(applicationLifetime));
-        _mainForm = mainForm ?? throw new ArgumentNullException(nameof(mainForm));
-    }
+        private readonly IHostApplicationLifetime _applicationLifetime;
 
-    public Task StartAsync(CancellationToken cancellationToken)
-    {
-        _applicationLifetime.ApplicationStarted.Register(() =>
+        private readonly MainForm _mainForm;
+
+        public ConsoleHostedService(
+            IHostApplicationLifetime applicationLifetime,
+            MainForm mainForm)
         {
-            try
-            {
-                Application.Run(_mainForm);
-            }
-            catch (Exception)
-            {
-            }
-            finally
-            {
-                _applicationLifetime.StopApplication();
-            }
-        });
-        return Task.CompletedTask;
-    }
+            _applicationLifetime = applicationLifetime ?? throw new ArgumentNullException(nameof(applicationLifetime));
+            _mainForm = mainForm ?? throw new ArgumentNullException(nameof(mainForm));
+        }
 
-    public Task StopAsync(CancellationToken cancellationToken)
-    {
-        return Task.CompletedTask;
+        public Task StartAsync(CancellationToken cancellationToken)
+        {
+            _applicationLifetime.ApplicationStarted.Register(() =>
+            {
+                try
+                {
+                    Application.Run(_mainForm);
+                }
+                catch (Exception)
+                {
+                }
+                finally
+                {
+                    _applicationLifetime.StopApplication();
+                }
+            });
+            return Task.CompletedTask;
+        }
+
+        public Task StopAsync(CancellationToken cancellationToken)
+        {
+            return Task.CompletedTask;
+        }
     }
 }

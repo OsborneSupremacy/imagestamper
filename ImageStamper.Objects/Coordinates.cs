@@ -1,14 +1,15 @@
-﻿namespace ImageStamper.Objects;
-
-public struct Coordinates
+﻿namespace ImageStamper.Objects
 {
-    public Coordinates(float x, float y)
+    public struct Coordinates
     {
-        X = x;
-        Y = y;
+        public Coordinates(float x, float y)
+        {
+            X = x;
+            Y = y;
+        }
+
+        public float X { get; set; }
+
+        public float Y { get; set; }
     }
-
-    public float X { get; set; }
-
-    public float Y { get; set; }
 }

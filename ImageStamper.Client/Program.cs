@@ -1,38 +1,39 @@
+﻿using System.Reflection;
 using ImageStamper.Client.Service;
 using ImageStamper.Service;
+using ImageStamper.Utility;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.Reflection;
-using ImageStamper.Utility;
 
-namespace ImageStamper.Client;
-
-internal static class Program
+namespace ImageStamper.Client
 {
-    static async Task Main()
+    internal static class Program
     {
-        var builder = new ConfigurationBuilder()
-            .AddJsonFile("appsettings.json");
+        static async Task Main()
+        {
+            var builder = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json");
 
-        var configuration = builder.Build();
+            var configuration = builder.Build();
 
-        await Host.CreateDefaultBuilder()
-            .ConfigureServices((hostContext, services) =>
-            {
-                services.AddHostedService<ConsoleHostedService>();
-
-                services.AddOptions<Settings>()
-                    .Bind(configuration.GetSection("Settings"))
-                    .ValidateDataAnnotations();
-
-                typeof(Processor).GetTypesInAssembly().ForEach(x =>
+            await Host.CreateDefaultBuilder()
+                .ConfigureServices((hostContext, services) =>
                 {
-                    services.AddSingleton(x);
-                });
+                    services.AddHostedService<ConsoleHostedService>();
 
-                services.AddSingleton<MainForm>();
-            })
-            .RunConsoleAsync();
+                    services.AddOptions<Settings>()
+                        .Bind(configuration.GetSection("Settings"))
+                        .ValidateDataAnnotations();
+
+                    typeof(Processor).GetTypesInAssembly().ForEach(x =>
+                    {
+                        services.AddSingleton(x);
+                    });
+
+                    services.AddSingleton<MainForm>();
+                })
+                .RunConsoleAsync();
+        }
     }
 }

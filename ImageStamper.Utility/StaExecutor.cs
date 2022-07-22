@@ -4,39 +4,40 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ImageStamper.Utility;
-
-public static class StaExecutor
+namespace ImageStamper.Utility
 {
-    public static void Execute(Action delegateAction)
+    public static class StaExecutor
     {
-        Thread thread = new(() =>
+        public static void Execute(Action delegateAction)
         {
-            delegateAction.Invoke();
-        });
-        thread.SetApartmentState(ApartmentState.STA);
-        thread.Start();
-        thread.Join();
-    }
+            Thread thread = new(() =>
+            {
+                delegateAction.Invoke();
+            });
+            thread.SetApartmentState(ApartmentState.STA);
+            thread.Start();
+            thread.Join();
+        }
 
-    /// <summary>
-    /// Some dialogs needs to be accessed in STA threads. This should be used for those.
-    /// </summary>
-    /// <param name="dialogDelegate"></param>
-    /// <returns></returns>
-    public static T Execute<T>(Func<T> dialogDelegate, T defaultValue)
-    {
-        T valueOut = defaultValue;
-
-        Thread thread = new(() =>
+        /// <summary>
+        /// Some dialogs needs to be accessed in STA threads. This should be used for those.
+        /// </summary>
+        /// <param name="dialogDelegate"></param>
+        /// <returns></returns>
+        public static T Execute<T>(Func<T> dialogDelegate, T defaultValue)
         {
-            valueOut = dialogDelegate.Invoke();
-        });
-        thread.SetApartmentState(ApartmentState.STA);
-        thread.Start();
-        thread.Join();
+            T valueOut = defaultValue;
 
-        return valueOut;
+            Thread thread = new(() =>
+            {
+                valueOut = dialogDelegate.Invoke();
+            });
+            thread.SetApartmentState(ApartmentState.STA);
+            thread.Start();
+            thread.Join();
+
+            return valueOut;
+        }
+
     }
-
 }

@@ -1,6 +1,6 @@
-﻿Imports System.IO
+﻿Imports System.Drawing.Drawing2D
 Imports System.Drawing.Imaging
-Imports System.Drawing.Drawing2D
+Imports System.IO
 Imports System.Reflection
 
 Public Class ImageStamperClass

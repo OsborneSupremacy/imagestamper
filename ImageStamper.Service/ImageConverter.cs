@@ -1,24 +1,25 @@
 ﻿using System.Drawing;
 using System.Drawing.Drawing2D;
 
-namespace ImageStamper.Service;
-
-public class ImageConverter
+namespace ImageStamper.Service
 {
-    public Graphics? BitmapToGraphics(Bitmap input)
+    public class ImageConverter
     {
-        try
+        public Graphics? BitmapToGraphics(Bitmap input)
         {
-            var imgGrfx = Graphics.FromImage(input);
-            imgGrfx.CompositingQuality = CompositingQuality.HighQuality;
-            imgGrfx.SmoothingMode = SmoothingMode.HighQuality;
-            imgGrfx.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            try
+            {
+                var imgGrfx = Graphics.FromImage(input);
+                imgGrfx.CompositingQuality = CompositingQuality.HighQuality;
+                imgGrfx.SmoothingMode = SmoothingMode.HighQuality;
+                imgGrfx.InterpolationMode = InterpolationMode.HighQualityBicubic;
 
-            return imgGrfx;
-        }
-        catch (Exception)
-        {
-            return null;
+                return imgGrfx;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
     }
 }

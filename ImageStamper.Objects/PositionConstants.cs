@@ -1,15 +1,16 @@
 ﻿
-namespace ImageStamper.Objects;
-
-public enum PositionConstants
+namespace ImageStamper.Objects
 {
-    TopLeft,
-    TopXCenter,
-    TopRight,
-    YCenterLeft,
-    YCenterXCenter,
-    YCenterRight,
-    BottomLeft,
-    BottomXCenter,
-    BottomRight
+    public enum PositionConstants
+    {
+        TopLeft,
+        TopXCenter,
+        TopRight,
+        YCenterLeft,
+        YCenterXCenter,
+        YCenterRight,
+        BottomLeft,
+        BottomXCenter,
+        BottomRight
+    }
 }

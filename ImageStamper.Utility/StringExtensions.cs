@@ -1,7 +1,8 @@
-﻿namespace ImageStamper.Utility;
-
-public static class StringExtensions
+﻿namespace ImageStamper.Utility
 {
-    public static FileInfo GetFileInfo(this string input) =>
-        new(input);
+    public static class StringExtensions
+    {
+        public static FileInfo GetFileInfo(this string input) =>
+            new(input);
+    }
 }

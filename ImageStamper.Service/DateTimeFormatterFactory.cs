@@ -1,18 +1,19 @@
 ﻿using System.Text;
 
-namespace ImageStamper.Service;
-
-public class DateTimeFormatterFactory
+namespace ImageStamper.Service
 {
-    public Func<DateTime, string> Create(string dateFormat, bool includeTime, string timeFormat)
+    public class DateTimeFormatterFactory
     {
-        StringBuilder combinedFormat = new(dateFormat);
-        if (includeTime && !string.IsNullOrWhiteSpace(timeFormat))
-            combinedFormat.Append($" {timeFormat}");
-
-        return (DateTime input) =>
+        public Func<DateTime, string> Create(string dateFormat, bool includeTime, string timeFormat)
         {
-            return input.ToString(combinedFormat.ToString());
-        };
+            StringBuilder combinedFormat = new(dateFormat);
+            if (includeTime && !string.IsNullOrWhiteSpace(timeFormat))
+                combinedFormat.Append($" {timeFormat}");
+
+            return (DateTime input) =>
+            {
+                return input.ToString(combinedFormat.ToString());
+            };
+        }
     }
 }
