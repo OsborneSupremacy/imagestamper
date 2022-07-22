@@ -6,34 +6,33 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace ImageStamper.Client
+namespace ImageStamper.Client;
+
+internal static class Program
 {
-    internal static class Program
+    static async Task Main()
     {
-        static async Task Main()
-        {
-            var builder = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json");
+        var builder = new ConfigurationBuilder()
+            .AddJsonFile("appsettings.json");
 
-            var configuration = builder.Build();
+        var configuration = builder.Build();
 
-            await Host.CreateDefaultBuilder()
-                .ConfigureServices((hostContext, services) =>
+        await Host.CreateDefaultBuilder()
+            .ConfigureServices((hostContext, services) =>
+            {
+                services.AddHostedService<ConsoleHostedService>();
+
+                services.AddOptions<Settings>()
+                    .Bind(configuration.GetSection("Settings"))
+                    .ValidateDataAnnotations();
+
+                typeof(Processor).GetTypesInAssembly().ForEach(x =>
                 {
-                    services.AddHostedService<ConsoleHostedService>();
+                    services.AddSingleton(x);
+                });
 
-                    services.AddOptions<Settings>()
-                        .Bind(configuration.GetSection("Settings"))
-                        .ValidateDataAnnotations();
-
-                    typeof(Processor).GetTypesInAssembly().ForEach(x =>
-                    {
-                        services.AddSingleton(x);
-                    });
-
-                    services.AddSingleton<MainForm>();
-                })
-                .RunConsoleAsync();
-        }
+                services.AddSingleton<MainForm>();
+            })
+            .RunConsoleAsync();
     }
 }

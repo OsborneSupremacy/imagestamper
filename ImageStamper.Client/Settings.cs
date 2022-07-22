@@ -1,10 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ImageStamper.Client
+namespace ImageStamper.Client;
+
+public record Settings
 {
-    public record Settings
-    {
-        [Required]
-        public List<string> SupportedImageTypes { get; set; } = default!;
-    }
+    [Required]
+    public List<string> SupportedImageTypes { get; set; } = default!;
 }
