@@ -1,30 +1,25 @@
 ﻿using System.Drawing;
+using ImageStamper.Objects;
 
 namespace ImageStamper.Service;
 
 public class StampSizeService
 {
-    public (SizeF, Font) GetStampSize(
-        SizeF imageSize,
-        Graphics imgGrphx,
-        string text,
-        Font fontIn,
-        int percentOfImage
-        )
+    public (SizeF, Font) GetStampSize(StampSizeArgs args)
     {
         var fontSize = 1;
 
-        var (size, fontOut) = MeasureStampSize(imgGrphx, text, fontIn, fontSize);
+        var (size, fontOut) = MeasureStampSize(args.Image, args.FontArgs.Text, args.FontArgs.Font, fontSize);
 
-        var longestSide = imageSize.Height > imageSize.Width ? imageSize.Height : imageSize.Width;
+        var longestSide = args.Size.Height > args.Size.Width ? args.Size.Height : args.Size.Width;
 
-        double targetWidth = longestSide * (percentOfImage / 100.0);
+        double targetWidth = longestSide * (args.FontArgs.PercentOfImage / 100.0);
 
         // keep increasing font until the stamp satisfies target size
         while (size.Width < targetWidth)
         {
             var fontTemp = fontOut;
-            (size, fontOut) = MeasureStampSize(imgGrphx, text, fontTemp, ++fontSize);
+            (size, fontOut) = MeasureStampSize(args.Image, args.FontArgs.Text, fontTemp, ++fontSize);
         }
 
         return (size, fontOut);

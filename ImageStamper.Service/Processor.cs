@@ -6,7 +6,7 @@ namespace ImageStamper.Service;
 public class Processor
 {
     // TODO: use ems for padding, rather than pixesls
-    private const int _padPixels = 2;
+    private const int PadPixels = 2;
 
     private readonly ImageConverter _imageConverter;
 
@@ -42,8 +42,11 @@ public class Processor
 
         SolidBrush brush = new(args.Color);
 
-        var (stampSize, stampFont) = _stampSizeService.GetStampSize(imageSize, imgGrphx, args.Text, args.Font, args.PercentOfImage);
-        var boundaries = _boundaryCalculator.Calculate(imageSize, stampSize, _padPixels);
+        StampSizeArgs stampSizeArgs = 
+            new(imageSize, imgGrphx, new FontArgs(args.Text, args.Font, args.PercentOfImage, args.Position));
+
+        var (stampSize, stampFont) = _stampSizeService.GetStampSize(stampSizeArgs);
+        var boundaries = _boundaryCalculator.Calculate(imageSize, stampSize, PadPixels);
         var coordinates = _coordinatesService.Get(args.Position, boundaries);
 
         if (args.BackgroundFill)
