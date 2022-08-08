@@ -102,10 +102,12 @@ public partial class MainForm : Form
                 Properties.Resources.IMG_3192,
                 ColorTextBox.BackColor,
                 BackgroundFillCheckBox.Checked,
-                FontTextBox.Font,
-                dateTimeFormatter.Invoke(combinedDateTime),
-                PositionConstants.YCenterXCenter,
+                new(
+                    FontTextBox.Font,
+                    dateTimeFormatter.Invoke(combinedDateTime),
+                    PositionConstants.YCenterXCenter,
                 60
+                )
             )
         )!;
 
