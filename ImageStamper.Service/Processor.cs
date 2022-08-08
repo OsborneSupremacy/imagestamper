@@ -52,7 +52,8 @@ public class Processor
         if (args.BackgroundFill)
             _drawingService.DrawBackground(imgGrphx, coordinates, stampSize);
 
-        _drawingService.DrawStamp(imgGrphx, brush, stampFont, args.TypographyArgs.Text, coordinates);
+        // TODO: create TypeSettingsArgs factory
+        _drawingService.DrawStamp(imgGrphx, new(args.TypographyArgs, brush, coordinates, stampFont));
 
         return args.Bitmap;
     }

@@ -7,13 +7,10 @@ public class DrawingService
 {
     public Graphics DrawStamp(
         Graphics imgGrphx,
-        Brush brush,
-        Font font,
-        string text,
-        Coordinates coordinates
+        TypeSettingsArgs args
         )
     {
-        imgGrphx.DrawString(text, font, brush, coordinates.X, coordinates.Y);
+        imgGrphx.DrawString(args.Text, args.Font, args.Brush, args.Coordinates.X, args.Coordinates.Y);
         return imgGrphx;
     }
 
