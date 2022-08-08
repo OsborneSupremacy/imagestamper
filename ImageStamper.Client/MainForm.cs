@@ -97,8 +97,8 @@ public partial class MainForm : Form
     {
         var (combinedDateTime, dateTimeFormatter) = GetDateTimeObjects();
 
-        Bitmap preview = _processor
-            .Process(
+        Bitmap preview = _processor.Process(
+            new(
                 Properties.Resources.IMG_3192,
                 ColorTextBox.BackColor,
                 BackgroundFillCheckBox.Checked,
@@ -106,7 +106,8 @@ public partial class MainForm : Form
                 dateTimeFormatter.Invoke(combinedDateTime),
                 PositionConstants.YCenterXCenter,
                 60
-            )!;
+            )
+        )!;
 
         PreviewPictureBackGroundBox.Image = preview;
         PreviewPictureBackGroundBox.Refresh();

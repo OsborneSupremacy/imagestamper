@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using System.Text;
 using ImageStamper.Objects;
 using ImageStamper.Service;
 using ImageStamper.Utility;

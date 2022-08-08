@@ -33,33 +33,25 @@ public class Processor
         _coordinatesService = coordinatesService ?? throw new ArgumentNullException(nameof(coordinatesService));
     }
 
-    public Bitmap? Process(
-        Bitmap bitmap,
-        Color color,
-        bool backGroundFill,
-        Font fontIn,
-        string text,
-        PositionConstants position,
-        int percentOfImage
-        )
+    public Bitmap? Process(ProcessArgs args)
     {
-        using var imgGrphx = _imageConverter.BitmapToGraphics(bitmap);
+        using var imgGrphx = _imageConverter.BitmapToGraphics(args.Bitmap);
         if (imgGrphx == null) return null;
 
-        var imageSize = new SizeF(bitmap.Width, bitmap.Height);
+        var imageSize = new SizeF(args.Bitmap.Width, args.Bitmap.Height);
 
-        SolidBrush brush = new(color);
+        SolidBrush brush = new(args.Color);
 
-        var (stampSize, stampFont) = _stampSizeService.GetStampSize(imageSize, imgGrphx, text, fontIn, percentOfImage);
+        var (stampSize, stampFont) = _stampSizeService.GetStampSize(imageSize, imgGrphx, args.Text, args.Font, args.PercentOfImage);
         var boundaries = _boundaryCalculator.Calculate(imageSize, stampSize, _padPixels);
-        var coordinates = _coordinatesService.Get(position, boundaries);
+        var coordinates = _coordinatesService.Get(args.Position, boundaries);
 
-        if (backGroundFill)
+        if (args.BackgroundFill)
             _drawingService.DrawBackground(imgGrphx, coordinates, stampSize);
 
-        _drawingService.DrawStamp(imgGrphx, brush, stampFont, text, coordinates);
+        _drawingService.DrawStamp(imgGrphx, brush, stampFont, args.Text, coordinates);
 
-        return bitmap;
+        return args.Bitmap;
     }
 
 }

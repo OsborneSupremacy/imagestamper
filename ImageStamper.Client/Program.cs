@@ -1,6 +1,4 @@
-﻿using System.Reflection;
-using ImageStamper.Client.Service;
-using ImageStamper.Service;
+﻿using ImageStamper.Service;
 using ImageStamper.Utility;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
