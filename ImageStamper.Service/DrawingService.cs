@@ -16,11 +16,10 @@ public class DrawingService
 
     public Graphics DrawBackground(
         Graphics imgGrphx,
-        Coordinates coordinates,
-        SizeF size
+        TypeSettingsArgs args
         )
     {
-        imgGrphx.FillRectangle(Brushes.Black, coordinates.X, coordinates.Y, size.Width, size.Height);
+        imgGrphx.FillRectangle(Brushes.Black, args.Coordinates.X, args.Coordinates.Y, args.StampSize.Width, args.StampSize.Height);
         return imgGrphx;
     }
 

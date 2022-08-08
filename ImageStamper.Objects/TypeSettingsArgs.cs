@@ -8,15 +8,19 @@ public record TypeSettingsArgs : TypographyArgs
         TypographyArgs original,
         Brush brush,
         Coordinates coordinates,
-        Font newFont
+        Font newFont,
+        SizeF stampSize
         ) : base(original)
     {
         Brush = brush;
         Coordinates = coordinates;
         Font = newFont;
+        StampSize = stampSize;
     }
 
     public Brush Brush { get; set; }
 
     public Coordinates Coordinates { get; set; }
+
+    public SizeF StampSize { get; set; }
 }
