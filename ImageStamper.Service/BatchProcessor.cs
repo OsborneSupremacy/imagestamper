@@ -25,7 +25,7 @@ public class BatchProcessor
 
             using var newBitmap = _processor.Process(
                 new(bitmap, settings.Color, settings.BackGroundFill,
-                    new(settings.Font, text, settings.Position, settings.PercentOfImage)
+                    new(settings.FontArgs, text)
                 )
             );
 

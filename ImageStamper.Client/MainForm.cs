@@ -149,12 +149,15 @@ public partial class MainForm : Form
             outputDirectory,
             ColorTextBox.BackColor,
             BackgroundFillCheckBox.Checked,
-            FontTextBox.Font,
             UseExifCheckBox.Checked,
             combinedDateTime,
             dateTimeFormatter,
-            _position,
-            SizeTrackBar.Value);
+            new(
+                FontTextBox.Font,
+                _position,
+                SizeTrackBar.Value
+            )
+        );
 
         ClientFunctions.ExecuteBatchProcess(_batchProcessor, settings);
         ClientFunctions.OpenInExplorer(outputDirectory.FullName);
