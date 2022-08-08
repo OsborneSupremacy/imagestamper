@@ -22,8 +22,11 @@ public class BatchProcessor
         {
             using var bitmap = new Bitmap(imageFile.FullName);
             var text = await GetStampTextAsync(imageFile, settings.UseExif, settings.DefaultDateTime, settings.DateTimeFormatter);
+
             using var newBitmap = _processor.Process(
-                new(bitmap, settings.Color, settings.BackGroundFill, new(settings.Font, text, settings.Position, settings.PercentOfImage))
+                new(bitmap, settings.Color, settings.BackGroundFill,
+                    new(settings.Font, text, settings.Position, settings.PercentOfImage)
+                )
             );
 
             if (newBitmap == null)

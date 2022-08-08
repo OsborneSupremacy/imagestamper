@@ -4,16 +4,16 @@ namespace ImageStamper.Objects;
 
 public record StampSizeArgs
 {
-    public StampSizeArgs(SizeF size, Graphics image, FontArgs fontArgs)
+    public StampSizeArgs(SizeF size, Graphics image, TypographyArgs typographyArgs)
     {
         Size = size;
         Image = image ?? throw new ArgumentNullException(nameof(image));
-        FontArgs = fontArgs ?? throw new ArgumentNullException(nameof(fontArgs));
+        TypographyArgs = typographyArgs ?? throw new ArgumentNullException(nameof(typographyArgs));
     }
 
     public SizeF Size { get; set; }
 
     public Graphics Image { get; set; }
 
-    public FontArgs FontArgs { get; set; }
+    public TypographyArgs TypographyArgs { get; set; }
 }

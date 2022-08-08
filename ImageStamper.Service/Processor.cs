@@ -43,16 +43,16 @@ public class Processor
         SolidBrush brush = new(args.Color);
 
         StampSizeArgs stampSizeArgs = 
-            new(imageSize, imgGrphx, args.FontArgs);
+            new(imageSize, imgGrphx, args.TypographyArgs);
 
         var (stampSize, stampFont) = _stampSizeService.GetStampSize(stampSizeArgs);
         var boundaries = _boundaryCalculator.Calculate(imageSize, stampSize, PadPixels);
-        var coordinates = _coordinatesService.Get(args.FontArgs.Position, boundaries);
+        var coordinates = _coordinatesService.Get(args.TypographyArgs.Position, boundaries);
 
         if (args.BackgroundFill)
             _drawingService.DrawBackground(imgGrphx, coordinates, stampSize);
 
-        _drawingService.DrawStamp(imgGrphx, brush, stampFont, args.FontArgs.Text, coordinates);
+        _drawingService.DrawStamp(imgGrphx, brush, stampFont, args.TypographyArgs.Text, coordinates);
 
         return args.Bitmap;
     }

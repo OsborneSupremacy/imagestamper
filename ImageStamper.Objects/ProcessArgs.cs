@@ -4,12 +4,12 @@ namespace ImageStamper.Objects;
 
 public record ProcessArgs
 {
-    public ProcessArgs(Bitmap bitmap, Color color, bool backgroundFill, FontArgs fontArgs)
+    public ProcessArgs(Bitmap bitmap, Color color, bool backgroundFill, TypographyArgs typographyArgs)
     {
         Bitmap = bitmap ?? throw new ArgumentNullException(nameof(bitmap));
         Color = color;
         BackgroundFill = backgroundFill;
-        FontArgs = fontArgs ?? throw new ArgumentNullException(nameof(fontArgs));
+        TypographyArgs = typographyArgs ?? throw new ArgumentNullException(nameof(typographyArgs));
     }
 
     public Bitmap Bitmap { get; set; }
@@ -18,5 +18,5 @@ public record ProcessArgs
 
     public bool BackgroundFill { get; set; }
 
-    public FontArgs FontArgs { get; set; }
+    public TypographyArgs TypographyArgs { get; set; }
 }

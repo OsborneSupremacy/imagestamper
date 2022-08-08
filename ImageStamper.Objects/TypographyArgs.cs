@@ -2,9 +2,9 @@
 
 namespace ImageStamper.Objects;
 
-public record FontArgs
+public record TypographyArgs
 {
-    public FontArgs(Font font, string text, PositionConstants position, int percentOfImage)
+    public TypographyArgs(Font font, string text, PositionConstants position, int percentOfImage)
     {
         Text = text ?? throw new ArgumentNullException(nameof(text));
         Font = font ?? throw new ArgumentNullException(nameof(font));
