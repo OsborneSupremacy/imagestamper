@@ -16,38 +16,33 @@ public class BatchProcessor
         _exifExtractor = exifExtractor ?? throw new ArgumentNullException(nameof(exifExtractor));
     }
 
-    public async Task ProcessAsync(BatchProcessSettings settings)
+    public async Task ProcessAsync(BatchProcessArgs args)
     {
-        foreach (var imageFile in settings.ImageFiles)
+        foreach (var imageFile in args.ImageFiles)
         {
             using var bitmap = new Bitmap(imageFile.FullName);
-            var text = await GetStampTextAsync(imageFile, settings.UseExif, settings.DefaultDateTime, settings.DateTimeFormatter);
+            var text = await GetStampTextAsync(args, imageFile);
 
             using var newBitmap = _processor.Process(
-                new(bitmap, settings.Color, settings.BackGroundFill,
-                    new(settings.FontArgs, text)
+                new(bitmap, args.Color, args.BackGroundFill,
+                    new(args.FontArgs, text)
                 )
             );
 
             if (newBitmap == null)
                 continue;
 
-            newBitmap.Save(Path.Combine(settings.OutputDirectory.FullName, imageFile.Name), ImageFormat.Jpeg);
+            newBitmap.Save(Path.Combine(args.OutputDirectory.FullName, imageFile.Name), ImageFormat.Jpeg);
         }
     }
 
-    private async Task<string> GetStampTextAsync(
-        FileInfo imageFile,
-        bool useExif,
-        DateTime defaultDateTime,
-        Func<DateTime, string> dateTimeFormatter
-        )
+    private async Task<string> GetStampTextAsync(BatchProcessArgs args, FileInfo imageFile)
     {
         DateTime? exifDate = null;
 
-        if (useExif)
+        if (args.UseExif)
             exifDate = await _exifExtractor.ExtractDateAsync(imageFile.FullName);
 
-        return dateTimeFormatter.Invoke(exifDate ?? defaultDateTime);
+        return args.DateTimeFormatter(exifDate ?? args.DefaultDateTime);
     }
 }

@@ -144,7 +144,7 @@ public partial class MainForm : Form
 
         var (combinedDateTime, dateTimeFormatter) = GetDateTimeObjects();
 
-        var settings = new BatchProcessSettings(
+        var settings = new BatchProcessArgs(
             imageFiles,
             outputDirectory,
             ColorTextBox.BackColor,

@@ -60,9 +60,9 @@ Please correct the following problems:
         return;
     }
 
-    public static void ExecuteBatchProcess(BatchProcessor batchProcessor, BatchProcessSettings settings) =>
+    public static void ExecuteBatchProcess(BatchProcessor batchProcessor, BatchProcessArgs args) =>
         StaExecutor.Execute(() =>
         {
-            batchProcessor.ProcessAsync(settings).GetAwaiter().GetResult();
+            batchProcessor.ProcessAsync(args).GetAwaiter().GetResult();
         });
 }

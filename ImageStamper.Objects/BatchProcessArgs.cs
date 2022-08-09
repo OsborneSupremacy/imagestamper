@@ -2,9 +2,9 @@
 
 namespace ImageStamper.Objects;
 
-public record BatchProcessSettings
+public record BatchProcessArgs
 {
-    public BatchProcessSettings(
+    public BatchProcessArgs(
         IEnumerable<FileInfo> imageFiles,
         DirectoryInfo outputDirectory,
         Color color,
