@@ -34,7 +34,7 @@ public class TypeSettingsArgsFactory
             new(imageSize, image, args.TypographyArgs);
 
         var (stampSize, stampFont) = _stampSizeService.GetStampSize(stampSizeArgs);
-        var boundaries = _boundaryCalculator.Calculate(imageSize, stampSize, PadPixels);
+        var boundaries = _boundaryCalculator.Calculate(new(imageSize, stampSize, PadPixels));
         var coordinates = _coordinatesService.Get(args.TypographyArgs.Position, boundaries);
 
         return new(args.TypographyArgs, brush, coordinates, stampFont, stampSize);
