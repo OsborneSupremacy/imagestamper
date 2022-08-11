@@ -35,7 +35,7 @@ public static class Extensions
         return string.IsNullOrWhiteSpace(directoryName);
     }
 
-    public static List<string> GetFiles(
+    public static IEnumerable<string> GetFiles(
         this FolderBrowserDialog input,
         HashSet<string> supportedFileTypes
         )
@@ -53,8 +53,7 @@ public static class Extensions
         return new DirectoryInfo(result)
             .GetFiles()
             .Where(x => supportedFileTypes.Contains(x.Extension, StringComparer.OrdinalIgnoreCase))
-            .Select(x => x.FullName)
-            .ToList();
+            .Select(x => x.FullName);
     }
 
     public static void AddRangeNewOnly<T>(this ListBox input, IEnumerable<T> items)
@@ -76,7 +75,7 @@ public static class Extensions
     public static List<FileInfo> GetFiles(this ListBox input) =>
         input
             .GetItems<string>()
-            .Select(x => new FileInfo(x))
+            .Select(x => x.GetFileInfo())
             .ToList();
 
     public static List<T> GetSelectedItems<T>(this ListBox input)
