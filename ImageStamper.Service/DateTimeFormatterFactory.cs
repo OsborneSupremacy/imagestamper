@@ -1,6 +1,4 @@
-﻿using System.Text;
-
-namespace ImageStamper.Service;
+﻿namespace ImageStamper.Service;
 
 public class DateTimeFormatterFactory
 {

@@ -1,7 +1,4 @@
-﻿using System.Drawing;
-using ImageStamper.Objects;
-
-namespace ImageStamper.Service;
+﻿namespace ImageStamper.Service;
 public class TypeSettingsArgsFactory
 {
     // TODO: use ems for padding, rather than pixels

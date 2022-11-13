@@ -1,8 +1,4 @@
-﻿using System.Drawing;
-using System.Drawing.Imaging;
-using ImageStamper.Objects;
-
-namespace ImageStamper.Service;
+﻿namespace ImageStamper.Service;
 
 public class BatchProcessor
 {

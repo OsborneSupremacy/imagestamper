@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-
-namespace ImageStamper.Objects;
+﻿namespace ImageStamper.Objects;
 
 public record StampSizeArgs
 {

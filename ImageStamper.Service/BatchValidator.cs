@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-
-namespace ImageStamper.Service;
+﻿namespace ImageStamper.Service;
 
 public class BatchValidator
 {

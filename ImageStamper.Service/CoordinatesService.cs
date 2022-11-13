@@ -1,6 +1,4 @@
-﻿using ImageStamper.Objects;
-
-namespace ImageStamper.Service;
+﻿namespace ImageStamper.Service;
 
 public class CoordinatesService
 {
